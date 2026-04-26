@@ -38,9 +38,6 @@ public class Transformer {
         return video;
     }
 
-    // ==========================================
-    // 2. TRANSFORMAR CANAL
-    // ==========================================
     public Channel transformChannel(ChannelPT ptChannel) {
         if (ptChannel == null) return null;
 
