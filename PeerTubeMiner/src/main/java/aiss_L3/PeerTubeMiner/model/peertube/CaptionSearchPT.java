@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 })
 @Generated("jsonschema2pojo")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CaptionsPT {
+public class CaptionSearchPT {
 
     @JsonProperty("data")
     private List<CaptionPT> data;
@@ -34,7 +34,7 @@ public class CaptionsPT {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(CaptionsPT.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
+        sb.append(CaptionSearchPT.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
         sb.append("data");
         sb.append('=');
         sb.append(((this.data == null)?"<null>":this.data));

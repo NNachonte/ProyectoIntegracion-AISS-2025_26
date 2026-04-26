@@ -16,25 +16,25 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 })
 @Generated("jsonschema2pojo")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class VideosPT {
+public class CommentSearchPT {
 
     @JsonProperty("data")
-    private List<VideoPT> data;
+    private List<CommentPT> data;
 
     @JsonProperty("data")
-    public List<VideoPT> getData() {
+    public List<CommentPT> getData() {
         return data;
     }
 
     @JsonProperty("data")
-    public void setData(List<VideoPT> data) {
+    public void setData(List<CommentPT> data) {
         this.data = data;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(VideosPT.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
+        sb.append(CommentSearchPT.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
         sb.append("data");
         sb.append('=');
         sb.append(((this.data == null)?"<null>":this.data));

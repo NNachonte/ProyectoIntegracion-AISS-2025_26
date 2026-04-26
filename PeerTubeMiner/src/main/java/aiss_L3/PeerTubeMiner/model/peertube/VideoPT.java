@@ -129,9 +129,4 @@ public class VideoPT {
         }
         return sb.toString();
     }
-
-    public void setReleaseTime(String publishedAt) {
-        this.publishedAt = publishedAt;
-    }
-
 }
