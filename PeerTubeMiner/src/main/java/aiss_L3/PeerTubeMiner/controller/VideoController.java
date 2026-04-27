@@ -24,6 +24,6 @@ public class VideoController {
 
     @GetMapping("/{id}")
     public Video getVideoById(@PathVariable String id) {
-        return videoService.getVideoById(id);
+        return videoService.getVideoById(id,2 );
     }
 }
