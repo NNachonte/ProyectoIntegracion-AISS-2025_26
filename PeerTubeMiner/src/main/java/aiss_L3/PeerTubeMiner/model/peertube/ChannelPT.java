@@ -24,6 +24,11 @@ public class ChannelPT {
     private String name;
     @JsonProperty("displayName")
     private String displayName;
+    @JsonProperty("createdAt")
+    private String createdAt;
+    @JsonProperty("description")
+    private String description;
+
 
     @JsonProperty("id")
     public Integer getId() {
@@ -55,6 +60,28 @@ public class ChannelPT {
         this.displayName = displayName;
     }
 
+    @JsonProperty("createdAt")
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    @JsonProperty("createdAt")
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    @JsonProperty("description")
+    public String getDescription() {
+        return description;
+    }
+
+    @JsonProperty("description")
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -71,6 +98,13 @@ public class ChannelPT {
         sb.append('=');
         sb.append(((this.displayName == null)?"<null>":this.displayName));
         sb.append(',');
+        sb.append("createdAt");
+        sb.append('=');
+        sb.append(((this.createdAt == null)?"<null>":this.createdAt));
+        sb.append(',');
+        sb.append("description");
+        sb.append('=');
+        sb.append(((this.description == null)?"<null>":this.description));
         if (sb.charAt((sb.length()- 1)) == ',') {
             sb.setCharAt((sb.length()- 1), ']');
         } else {

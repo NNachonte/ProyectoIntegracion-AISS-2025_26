@@ -22,9 +22,6 @@ public class VideoService {
     @Autowired
     RestTemplate restTemplate;
 
-    // ==========================================
-    // GET VIDEOS
-    // ==========================================
     public List<Video> getVideos() {
         String url = "https://peertube.cpy.re/api/v1/videos";
         
