@@ -27,8 +27,6 @@ public class Transformer {
         video.setDescription(ptVideo.getDescription());
         video.setReleaseTime(ptVideo.getPublishedAt());
         
-
-        video.setChannel(transformChannel(ptVideo.getChannel()));
         video.setAuthor(transformUser(ptVideo.getAccount()));
         
         

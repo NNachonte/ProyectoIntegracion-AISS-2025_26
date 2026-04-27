@@ -119,9 +119,4 @@ public class Video {
                 ", captions=" + captions +
                 '}';
     }
-
-    public void setChannel(Channel transformChannel) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setChannel'");
-    }
 }
