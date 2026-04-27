@@ -45,6 +45,10 @@ public class Transformer {
 
         channel.setId(ptChannel.getId() != null ? String.valueOf(ptChannel.getId()) : null);
         channel.setName(ptChannel.getDisplayName());
+        channel.setDescription(ptChannel.getDescription());
+        channel.setCreatedTime(ptChannel.getCreatedAt());
+
+        channel.setVideos(new ArrayList<>());
 
         return channel;
     }
@@ -56,6 +60,9 @@ public class Transformer {
 
         user.setId(Long.valueOf(ptAccount.getId()));
         user.setName(ptAccount.getName());
+        user.setUser_link(ptAccount.getUrl());
+        user.setPicture_link(ptAccount.getAvatars() != null 
+        && !ptAccount.getAvatars().isEmpty() ? ptAccount.getAvatars().get(0).getFileUrl() : null);
 
         return user;
     }
@@ -80,6 +87,8 @@ public class Transformer {
         comment.setId(String.valueOf(ptComment.getId()));
         comment.setText(ptComment.getText());
         comment.setCreatedOn(ptComment.getCreatedAt());
+        comment.setAuthor(transformUser(ptComment.getAccount()));
+        
 
         return comment;
     }
