@@ -85,7 +85,6 @@ public class Transformer {
         comment.setId(String.valueOf(ptComment.getId()));
         comment.setText(ptComment.getText());
         comment.setCreatedOn(ptComment.getCreatedAt());
-        comment.setAuthor(transformUser(ptComment.getAccount()));
         
 
         return comment;

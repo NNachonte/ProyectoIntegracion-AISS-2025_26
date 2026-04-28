@@ -1,4 +1,4 @@
-package aiss_L3.PeerTubeMiner.services;
+package aiss_L3.PeerTubeMiner;
 
 import java.util.List;
 
@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import aiss_L3.PeerTubeMiner.model.videominer.Channel;
+import aiss_L3.PeerTubeMiner.model.videominer.Comment;
 import aiss_L3.PeerTubeMiner.model.videominer.Video;
+import aiss_L3.PeerTubeMiner.services.ChannelService;
 
 @SpringBootTest
 public class ChannelServiceTest {
@@ -45,8 +47,15 @@ public class ChannelServiceTest {
             assertNotNull(firstVideo.getId(), "El vídeo debe tener un ID");
             assertNotNull(firstVideo.getName(), "El vídeo debe tener un título");
             
-            System.out.println("  -> Vídeo encontrado: " + firstVideo.getName());
+            System.out.println("  -> Vídeo encontrado: " + firstVideo.toString());
             System.out.println("  -> Comentarios encontrados: " + firstVideo.getComments().size());
+            List<Comment> comments = firstVideo.getComments();
+            assertNotNull(comments, "La lista de comentarios del vídeo debe existir (aunque esté vacía)");
+            System.out.println("Ejemplode comentario: " + (comments.isEmpty() ? "No hay comentarios" : comments.get(0).toString()));
         }
+
+
+        System.out.println("Ejemplo de canal obtenido: " + firstChannel.toString());
+        System.out.println("Total de canales obtenidos: " + channels.size());
     }
 }

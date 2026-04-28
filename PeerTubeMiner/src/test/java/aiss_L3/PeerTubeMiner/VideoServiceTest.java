@@ -1,4 +1,4 @@
-package aiss_L3.PeerTubeMiner.services;
+package aiss_L3.PeerTubeMiner;
 
 import java.util.List;
 
@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import aiss_L3.PeerTubeMiner.model.videominer.Comment;
 import aiss_L3.PeerTubeMiner.model.videominer.Video;
+import aiss_L3.PeerTubeMiner.services.VideoService;
 
 @SpringBootTest
 class VideoServiceTest {
@@ -46,8 +47,8 @@ class VideoServiceTest {
         if (!video.getComments().isEmpty()) {
             Comment firstComment = video.getComments().get(0);
             assertNotNull(firstComment.getText(), "El texto del comentario debe existir");
-            assertNotNull(firstComment.getAuthor(), "El comentario debe tener un autor (User)");
-            System.out.println("  -> Comentario verificado de: " + firstComment.getAuthor().getName());
+            assertNotNull(firstComment.getCreatedOn(), "La fecha de creación del comentario debe existir");
+            System.out.println("Ejemplo de comentario obtenido: " + firstComment.toString());
         }
 
         // 5. Verificación de Captions (Subtítulos)

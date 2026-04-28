@@ -25,9 +25,6 @@ public class Comment {
     @JsonProperty("createdOn")
     private String createdOn;
 
-    @JsonProperty("author")
-    private User author;
-
     public String getId() {
         return id;
     }
@@ -52,13 +49,6 @@ public class Comment {
         this.createdOn = createdOn;
     }
 
-    public User getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(User author) {
-        this.author = author;
-    }
 
 
     @Override
@@ -67,7 +57,6 @@ public class Comment {
                 "id='" + id + '\'' +
                 ", text='" + text + '\'' +
                 ", createdOn='" + createdOn + '\'' +
-                ", author=" + author +
                 '}';
     }
 }
