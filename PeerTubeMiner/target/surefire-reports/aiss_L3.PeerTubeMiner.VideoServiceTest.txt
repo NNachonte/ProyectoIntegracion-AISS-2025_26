@@ -1,34 +1,35 @@
 -------------------------------------------------------------------------------
 Test set: aiss_L3.PeerTubeMiner.VideoServiceTest
 -------------------------------------------------------------------------------
-Tests run: 2, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 8.352 s <<< FAILURE! -- in aiss_L3.PeerTubeMiner.VideoServiceTest
-aiss_L3.PeerTubeMiner.VideoServiceTest.testGetVideos -- Time elapsed: 0.445 s <<< ERROR!
-org.springframework.web.client.RestClientException: Error while extracting response for type [class [Laiss_L3.PeerTubeMiner.model.Video;] and content type [application/json;charset=utf-8]
-	at org.springframework.web.client.HttpMessageConverterExtractor.extractData(HttpMessageConverterExtractor.java:127)
-	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:903)
+Tests run: 2, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 5.636 s <<< FAILURE! -- in aiss_L3.PeerTubeMiner.VideoServiceTest
+aiss_L3.PeerTubeMiner.VideoServiceTest.getVideos -- Time elapsed: 2.156 s <<< ERROR!
+org.springframework.web.client.HttpClientErrorException$TooManyRequests: 429 Too Many Requests on GET request for "https://peertube.cpy.re/api/v1/videos/dfd70b83-639f-4980-94af-304a56ab4b35/captions": "Too many requests, please try again later."
+	at org.springframework.web.client.HttpClientErrorException.create(HttpClientErrorException.java:130)
+	at org.springframework.web.client.DefaultResponseErrorHandler.handleError(DefaultResponseErrorHandler.java:186)
+	at org.springframework.web.client.DefaultResponseErrorHandler.handleError(DefaultResponseErrorHandler.java:147)
+	at org.springframework.web.client.RestTemplate.handleResponse(RestTemplate.java:953)
+	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:902)
 	at org.springframework.web.client.RestTemplate.execute(RestTemplate.java:801)
 	at org.springframework.web.client.RestTemplate.getForObject(RestTemplate.java:415)
-	at aiss_L3.PeerTubeMiner.services.VideoService.getVideos(VideoService.java:20)
-	at aiss_L3.PeerTubeMiner.VideoServiceTest.testGetVideos(VideoServiceTest.java:25)
+	at aiss_L3.PeerTubeMiner.services.VideoService.getVideoById(VideoService.java:69)
+	at aiss_L3.PeerTubeMiner.services.VideoService.getVideos(VideoService.java:41)
+	at aiss_L3.PeerTubeMiner.VideoServiceTest.getVideos(VideoServiceTest.java:62)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-Caused by: org.springframework.http.converter.HttpMessageNotReadableException: JSON parse error: Cannot deserialize value of type `aiss_L3.PeerTubeMiner.model.Video[]` from Object value (token `JsonToken.START_OBJECT`)
-	at org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter.readJavaType(AbstractJackson2HttpMessageConverter.java:408)
-	at org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter.read(AbstractJackson2HttpMessageConverter.java:356)
-	at org.springframework.web.client.HttpMessageConverterExtractor.extractData(HttpMessageConverterExtractor.java:105)
-	... 8 more
-Caused by: com.fasterxml.jackson.databind.exc.MismatchedInputException: Cannot deserialize value of type `aiss_L3.PeerTubeMiner.model.Video[]` from Object value (token `JsonToken.START_OBJECT`)
- at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); line: 1, column: 1]
-	at com.fasterxml.jackson.databind.exc.MismatchedInputException.from(MismatchedInputException.java:72)
-	at com.fasterxml.jackson.databind.DeserializationContext.reportInputMismatch(DeserializationContext.java:1814)
-	at com.fasterxml.jackson.databind.DeserializationContext.handleUnexpectedToken(DeserializationContext.java:1588)
-	at com.fasterxml.jackson.databind.DeserializationContext.handleUnexpectedToken(DeserializationContext.java:1535)
-	at com.fasterxml.jackson.databind.deser.std.ObjectArrayDeserializer.handleNonArray(ObjectArrayDeserializer.java:413)
-	at com.fasterxml.jackson.databind.deser.std.ObjectArrayDeserializer.deserialize(ObjectArrayDeserializer.java:200)
-	at com.fasterxml.jackson.databind.deser.DefaultDeserializationContext.readRootValue(DefaultDeserializationContext.java:342)
-	at com.fasterxml.jackson.databind.ObjectReader._bindAndClose(ObjectReader.java:2148)
-	at com.fasterxml.jackson.databind.ObjectReader.readValue(ObjectReader.java:1504)
-	at org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter.readJavaType(AbstractJackson2HttpMessageConverter.java:397)
-	... 10 more
+
+aiss_L3.PeerTubeMiner.VideoServiceTest.getVideoById -- Time elapsed: 0.060 s <<< ERROR!
+org.springframework.web.client.HttpClientErrorException$TooManyRequests: 429 Too Many Requests on GET request for "https://peertube.cpy.re/api/v1/videos/9c9de5e8-0a11-4cd4-a9d7-36eeb536349c": "Too many requests, please try again later."
+	at org.springframework.web.client.HttpClientErrorException.create(HttpClientErrorException.java:130)
+	at org.springframework.web.client.DefaultResponseErrorHandler.handleError(DefaultResponseErrorHandler.java:186)
+	at org.springframework.web.client.DefaultResponseErrorHandler.handleError(DefaultResponseErrorHandler.java:147)
+	at org.springframework.web.client.RestTemplate.handleResponse(RestTemplate.java:953)
+	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:902)
+	at org.springframework.web.client.RestTemplate.execute(RestTemplate.java:801)
+	at org.springframework.web.client.RestTemplate.getForObject(RestTemplate.java:415)
+	at aiss_L3.PeerTubeMiner.services.VideoService.getVideoById(VideoService.java:51)
+	at aiss_L3.PeerTubeMiner.VideoServiceTest.getVideoById(VideoServiceTest.java:32)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
 

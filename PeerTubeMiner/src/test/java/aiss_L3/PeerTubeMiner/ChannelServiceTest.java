@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import aiss_L3.PeerTubeMiner.model.videominer.Caption;
 import aiss_L3.PeerTubeMiner.model.videominer.Channel;
 import aiss_L3.PeerTubeMiner.model.videominer.Comment;
 import aiss_L3.PeerTubeMiner.model.videominer.Video;
@@ -49,9 +50,16 @@ public class ChannelServiceTest {
             
             System.out.println("  -> Vídeo encontrado: " + firstVideo.toString());
             System.out.println("  -> Comentarios encontrados: " + firstVideo.getComments().size());
+
             List<Comment> comments = firstVideo.getComments();
             assertNotNull(comments, "La lista de comentarios del vídeo debe existir (aunque esté vacía)");
-            System.out.println("Ejemplode comentario: " + (comments.isEmpty() ? "No hay comentarios" : comments.get(0).toString()));
+            System.out.println("Ejemplo de comentario: " + (comments.isEmpty() ? "No hay comentarios" : comments.get(0).toString()));
+
+            List<Caption> captions = firstVideo.getCaptions();
+            assertNotNull(captions, "La lista de subtítulos del vídeo debe existir (aunque esté vacía)");
+            System.out.println("Ejemplo de subtítulo: " + (captions.isEmpty() ? "No hay subtítulos" : captions.get(0).toString()));
+
+
         }
 
 
