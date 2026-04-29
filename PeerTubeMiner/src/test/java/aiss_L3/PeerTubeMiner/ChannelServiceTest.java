@@ -35,7 +35,7 @@ public class ChannelServiceTest {
         // Comprobamos el primer canal de la lista
         Channel firstChannel = channels.get(0);
         
-        System.out.println("Validando canal: " + firstChannel.getName());
+        System.out.println("Validando canal: " + firstChannel.toString());
 
         // Comprobar campos obligatorios del modelo VideoMiner
         assertNotNull(firstChannel.getId(), "El ID del canal de VideoMiner no debe ser nulo");
@@ -61,9 +61,5 @@ public class ChannelServiceTest {
 
 
         }
-
-
-        System.out.println("Ejemplo de canal obtenido: " + firstChannel.toString());
-        System.out.println("Total de canales obtenidos: " + channels.size());
     }
 }
