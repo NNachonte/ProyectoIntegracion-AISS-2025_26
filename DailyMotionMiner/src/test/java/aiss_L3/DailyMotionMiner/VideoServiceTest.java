@@ -1,9 +1,10 @@
 package aiss_L3.DailyMotionMiner;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -170,5 +171,7 @@ class VideoServiceTest {
         assertEquals("Test title", videos.get(0).getName());
         assertNotNull(videos.get(0).getComments());
         assertNotNull(videos.get(0).getCaptions());
+
+        System.out.println("Ejemplo de vídeo obtenido: " + videos.get(0).toString());
     }
 }
