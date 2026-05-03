@@ -34,8 +34,10 @@ public class ChannelServiceTest {
         // 3. Verificación del Modelo de Datos (VideoMiner)
         // Comprobamos el primer canal de la lista
         Channel firstChannel = channels.get(0);
-        
+
+        System.out.println("=================================================================");
         System.out.println("Validando canal: " + firstChannel.toString());
+        System.out.println("=================================================================");
 
         // Comprobar campos obligatorios del modelo VideoMiner
         assertNotNull(firstChannel.getId(), "El ID del canal de VideoMiner no debe ser nulo");
@@ -61,5 +63,29 @@ public class ChannelServiceTest {
 
 
         }
+    }
+
+    @Test
+    @DisplayName("Debe devolver un canal válido dado un ID existente")
+    void testGetChannelById() {
+        // 1. Arrange (Preparar los datos)
+        // Usamos el ID 15 que vimos en tus datos que pertenece al canal "tcit"
+        String channelId = "poney"; 
+
+        // 2. Act (Ejecutar el método que queremos probar)
+        Channel channel = channelService.getChannelById(channelId);
+
+        // 3. Assert (Comprobar que el resultado es el esperado)
+        assertNotNull(channel, "El canal devuelto no debería ser null");
+        assertNotNull(channel.getId(), "El ID del canal mapeado no debería ser null");
+        assertNotNull(channel.getName(), "El canal debe tener un nombre");
+
+        // Si el canal 15 tiene vídeos, podemos comprobar que la lista se inicializa bien
+        assertNotNull(channel.getVideos(), "La lista de vídeos no debe ser null (aunque puede estar vacía)");
+        
+        // Comprobamos que el ID y/o el nombre tienen datos (opcionalmente puedes comprobar el nombre exacto si lo sabes)
+        System.out.println("Canal recuperado en el test: " + channel.getName());
+        System.out.println("Canal recuperado: " + channel.toString());
+        
     }
 }

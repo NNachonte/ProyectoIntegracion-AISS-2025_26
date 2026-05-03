@@ -78,7 +78,9 @@ public class Transformer {
     }
 
     public Comment transformComment(CommentPT ptComment) {
-        if (ptComment == null) return null;
+        if (ptComment.getText() == null || ptComment.getText().trim().isEmpty()) {
+            return null;
+        }
 
         Comment comment = new Comment();
 

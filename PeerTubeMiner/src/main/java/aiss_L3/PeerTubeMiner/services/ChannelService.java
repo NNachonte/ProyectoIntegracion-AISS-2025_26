@@ -29,7 +29,7 @@ public class ChannelService {
     VideoService videoService;
 
     public List<Channel> getChannels() {
-    String url = "https://peertube.cpy.re/api/v1/video-channels";
+    String url = "https://peertube2.cpy.re/api/v1/video-channels";
     ChannelSearchPt channelsJson = restTemplate.getForObject(url, ChannelSearchPt.class);
 
     List<Channel> channelsTransformados = new ArrayList<>();
@@ -67,45 +67,86 @@ public class ChannelService {
 }
 
     public Channel getChannelById(String id) {
-    
-        String baseUrl = "https://peertube.cpy.re/api/v1";
-        ChannelPT ptChannel = restTemplate.getForObject(baseUrl + "/video-channels/" + id, ChannelPT.class);
-    
-        Channel channel = transformer.transformChannel(ptChannel);
+        try{
+            // 1. Obtenemos el canal (Usando peertube2 como ya vimos)
+            String baseUrl = "https://peertube2.cpy.re/api/v1";
+            ChannelPT ptChannel = restTemplate.getForObject(baseUrl + "/video-channels/" + id, ChannelPT.class);
+            Channel channel = transformer.transformChannel(ptChannel);
 
-        VideoSearchPT videosJson = restTemplate.getForObject(baseUrl + "/video-channels/" + id + "/videos", VideoSearchPT.class);
+            // 2. En lugar de ir al endpoint del canal, vamos al general de vídeos
+            String videosUrl = baseUrl + "/videos"; 
+            VideoSearchPT allVideos = restTemplate.getForObject(videosUrl, VideoSearchPT.class);
 
-        if (videosJson != null && videosJson.getData() != null) {
-            for (VideoPT vpt : videosJson.getData()) {
-                Video videoTransformado = videoService.getVideoById(vpt.getUuid(),2); 
-            
-                channel.getVideos().add(videoTransformado);
+            if (allVideos != null && allVideos.getData() != null) {
+                for (VideoPT vpt : allVideos.getData()) {
+                    // 3. Comprobamos si el vídeo pertenece a este canal
+                    // PeerTube suele incluir el objeto channel dentro de cada vídeo
+                    if (vpt.getChannel() != null && vpt.getChannel().getId().equals(ptChannel.getId())) {
+                
+                        // 4. Si coincide, lo procesamos con tu videoService (que ya tiene el filtro de comentarios)
+                        Video videoTransformado = videoService.getVideoById(vpt.getUuid(), 2);
+                
+                        if (videoTransformado != null) {
+                            channel.getVideos().add(videoTransformado);
+                    }
+                    }
+                }
             }
+            return channel;
+        }catch (org.springframework.web.client.HttpClientErrorException.NotFound e) {
+            System.err.println("ERROR: El canal con ID '" + id + "' no existe en PeerTube.");
+            return null;
+        } catch (RestClientException e) {
+            System.err.println("ERROR inesperado: " + e.getMessage());
+            return null;
         }
-
-        return channel;
     }
 
     public Channel postChannel(String id, Integer maxVideos, Integer maxComments) {
-
+    try {
+        // 1. Definimos los límites
         int vLimit = (maxVideos != null) ? maxVideos : 10;
         int cLimit = (maxComments != null) ? maxComments : 2;
 
-        ChannelPT ptChannel = restTemplate.getForObject("https://peertube.cpy.re/api/v1/video-channels/" + id, ChannelPT.class);
+        // 2. Intentamos recuperar el canal de PeerTube
+        // Aquí es donde saltaba el error 404 si el ID no era correcto
+        String baseUrl = "https://peertube2.cpy.re/api/v1/video-channels/" + id;
+        ChannelPT ptChannel = restTemplate.getForObject(baseUrl, ChannelPT.class);
+        
+        // Transformamos el canal
         Channel channel = transformer.transformChannel(ptChannel);
 
-        String videosUrl = "https://peertube.cpy.re/api/v1/video-channels/" + id + "/videos?count=" + vLimit;
+        // 3. Intentamos recuperar los vídeos del canal
+        String videosUrl = baseUrl + "/videos?count=" + vLimit;
         VideoSearchPT videosJson = restTemplate.getForObject(videosUrl, VideoSearchPT.class);
 
         if (videosJson != null && videosJson.getData() != null) {
             for (VideoPT vpt : videosJson.getData()) {
+                // Obtenemos cada vídeo con sus comentarios
                 Video videoCompleto = videoService.getVideoById(vpt.getUuid(), cLimit);
-                channel.getVideos().add(videoCompleto);
+                
+                // IMPORTANTE: Asegúrate de que videoService.getVideoById 
+                // ya filtre los comentarios vacíos "" para no romper VideoMiner
+                if (videoCompleto != null) {
+                    channel.getVideos().add(videoCompleto);
+                }
             }
         }
 
+        // 4. Enviamos el objeto final a VideoMiner
         String videoMinerUrl = "http://localhost:8080/videominer/channels";
+        System.out.println("Enviando canal a VideoMiner: " + channel.getName());
         return restTemplate.postForObject(videoMinerUrl, channel, Channel.class);
+
+    } catch (org.springframework.web.client.HttpClientErrorException.NotFound e) {
+        // Capturamos específicamente el error 404
+        System.err.println("ERROR: El canal con ID '" + id + "' no existe en PeerTube.");
+        return null; // Devolvemos null para que el controlador sepa que no hubo éxito
+    } catch (RestClientException e) {
+        // Capturamos cualquier otro error (conexión, validación, etc.)
+        System.err.println("ERROR inesperado: " + e.getMessage());
+        return null;
     }
+}
     
 }

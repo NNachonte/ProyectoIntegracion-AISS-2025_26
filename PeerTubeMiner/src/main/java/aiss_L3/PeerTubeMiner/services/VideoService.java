@@ -28,7 +28,7 @@ public class VideoService {
     @Autowired
     RestTemplate restTemplate;
 
-    private final String baseUrl = "https://peertube.cpy.re/api/v1";
+    private final String baseUrl = "https://peertube2.cpy.re/api/v1";
 
     public List<Video> getVideos() {
         String url = baseUrl + "/videos";
@@ -58,11 +58,22 @@ public class VideoService {
         String commentsUrl = videoUrl + "/comment-threads?count="+limit;
         CommentSearchPT commentResponse = restTemplate.getForObject(commentsUrl, CommentSearchPT.class);
         
+        // Dentro de getVideoById, en el bucle de comentarios:
+
         if (commentResponse != null && commentResponse.getData() != null) {
             for (CommentPT ptComment : commentResponse.getData()) {
-                Comment comment = transformer.transformComment(ptComment);
-                video.getComments().add(comment); 
-            }
+                Comment comentarioTransformado = transformer.transformComment(ptComment);
+        
+                // ¡ESTE ES EL FILTRO CRUCIAL!
+                // Solo añadimos el comentario si tiene texto real. 
+                // Si el texto es null o está vacío (después de quitar espacios), lo ignoramos.
+                if (comentarioTransformado != null && 
+                    comentarioTransformado.getText() != null && 
+                    !comentarioTransformado.getText().trim().isEmpty()) {
+            
+                    video.getComments().add(comentarioTransformado);
+                } 
+            }       
         }
         
         String captionsUrl = videoUrl + "/captions";
