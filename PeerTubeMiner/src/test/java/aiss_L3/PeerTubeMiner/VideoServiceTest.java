@@ -23,9 +23,13 @@ class VideoServiceTest {
     @Test
     @DisplayName("Obtener un vídeo detallado con límite de comentarios")
     public void getVideoById() {
-        // 1. Necesitamos un UUID real de PeerTube para probar (puedes sacar uno de su web)
-        // Usaremos este de ejemplo que suele estar activo
-        String videoUuid = "9c9de5e8-0a11-4cd4-a9d7-36eeb536349c";
+        // Tomamos un UUID "vivo" desde el listado para evitar IDs hardcoded que
+        // puedan dejar de existir o causar 404.
+        List<Video> videos = videoService.getVideos();
+        assertNotNull(videos, "La lista de vídeos no debería ser nula");
+        assertFalse(videos.isEmpty(), "Debería devolver al menos un vídeo para poder probar getVideoById");
+
+        String videoUuid = videos.get(0).getId();
         Integer maxComments = 3;
 
         // 2. Ejecutar la llamada

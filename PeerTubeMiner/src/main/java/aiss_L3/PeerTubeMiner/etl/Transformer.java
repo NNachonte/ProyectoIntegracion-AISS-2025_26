@@ -41,7 +41,9 @@ public class Transformer {
 
         Channel channel = new Channel();
 
-        channel.setId(ptChannel.getId() != null ? String.valueOf(ptChannel.getId()) : null);
+        // En PeerTube, los endpoints /video-channels/{id} suelen esperar el "name" (handle),
+        // no el ID numérico interno. Usamos name como identificador estable.
+        channel.setId(ptChannel.getName() != null ? ptChannel.getName() : (ptChannel.getId() != null ? String.valueOf(ptChannel.getId()) : null));
         channel.setName(ptChannel.getDisplayName());
         channel.setDescription(ptChannel.getDescription());
         channel.setCreatedTime(ptChannel.getCreatedAt());

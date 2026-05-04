@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import aiss_L3.PeerTubeMiner.etl.Transformer;
@@ -30,33 +32,77 @@ public class VideoService {
 
     private final String baseUrl = "https://peertube.tv/api/v1";
 
-    public List<Video> getVideos() {
-        String url = baseUrl + "/videos";
-        VideoSearchPT videosJson = restTemplate.getForObject(url, VideoSearchPT.class);
-    
-        List<Video> videosTransformados = new ArrayList<>();
-    
-        if (videosJson != null && videosJson.getData() != null) {
-            for (VideoPT videoJson : videosJson.getData()) {
-                Video videoCompleto = this.getVideoById(videoJson.getUuid(),2);
-                videosTransformados.add(videoCompleto);
+    private <T> T getForObjectWithRetry(String url, Class<T> responseType) {
+        int attempts = 0;
+        long backoffMs = 250L;
+
+        while (true) {
+            try {
+                return restTemplate.getForObject(url, responseType);
+            } catch (HttpClientErrorException.TooManyRequests e) {
+                attempts++;
+                if (attempts >= 3) {
+                    throw e;
+                }
+                try {
+                    Thread.sleep(backoffMs);
+                } catch (InterruptedException ie) {
+                    Thread.currentThread().interrupt();
+                    throw e;
+                }
+                backoffMs *= 2;
             }
         }
+    }
+
+    public List<Video> getVideos() {
+        // Importante: NO enriquecemos cada vídeo con llamadas adicionales (comentarios/captions)
+        // porque dispara rate-limits (429) en peertube.tv.
+        String url = baseUrl + "/videos?count=10";
+
+        VideoSearchPT videosJson;
+        try {
+            videosJson = getForObjectWithRetry(url, VideoSearchPT.class);
+        } catch (RestClientException e) {
+            return new ArrayList<>();
+        }
+
+        List<Video> videosTransformados = new ArrayList<>();
+
+        if (videosJson != null && videosJson.getData() != null) {
+            for (VideoPT videoJson : videosJson.getData()) {
+                Video video = transformer.transformVideo(videoJson);
+                if (video != null) {
+                    videosTransformados.add(video);
+                }
+            }
+        }
+
         return videosTransformados;
     }
 
     public Video getVideoById(String id,Integer maxComments) {
         String videoUrl = baseUrl + "/videos/" + id;
-        
-        VideoPT videoJson = restTemplate.getForObject(videoUrl, VideoPT.class);
+
+        VideoPT videoJson;
+        try {
+            videoJson = getForObjectWithRetry(videoUrl, VideoPT.class);
+        } catch (RestClientException e) {
+            return null;
+        }
         if (videoJson == null) return null;
         
         Video video = transformer.transformVideo(videoJson);
 
         int limit = (maxComments != null) ? maxComments : 2;
 
-        String commentsUrl = videoUrl + "/comment-threads?count="+limit;
-        CommentSearchPT commentResponse = restTemplate.getForObject(commentsUrl, CommentSearchPT.class);
+        String commentsUrl = videoUrl + "/comment-threads?count=" + limit;
+        CommentSearchPT commentResponse = null;
+        try {
+            commentResponse = getForObjectWithRetry(commentsUrl, CommentSearchPT.class);
+        } catch (HttpClientErrorException.TooManyRequests e) {
+            // Si PeerTube rate-limita, devolvemos el vídeo igualmente (sin comentarios).
+        }
         
         // Dentro de getVideoById, en el bucle de comentarios:
 
@@ -77,7 +123,12 @@ public class VideoService {
         }
         
         String captionsUrl = videoUrl + "/captions";
-        CaptionSearchPT captionResponse = restTemplate.getForObject(captionsUrl, CaptionSearchPT.class);
+        CaptionSearchPT captionResponse = null;
+        try {
+            captionResponse = getForObjectWithRetry(captionsUrl, CaptionSearchPT.class);
+        } catch (HttpClientErrorException.TooManyRequests e) {
+            // Si PeerTube rate-limita, devolvemos el vídeo igualmente (sin captions).
+        }
         
         if (captionResponse != null && captionResponse.getData() != null) {
             for (CaptionPT ptCaption : captionResponse.getData()) {

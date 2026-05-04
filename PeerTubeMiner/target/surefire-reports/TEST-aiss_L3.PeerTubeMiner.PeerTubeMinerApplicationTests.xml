@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="aiss_L3.PeerTubeMiner.VideoServiceTest" time="1.242" tests="2" errors="0" skipped="0" failures="0" flakes="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="aiss_L3.PeerTubeMiner.PeerTubeMinerApplicationTests" time="0.053" tests="1" errors="0" skipped="0" failures="0" flakes="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -65,14 +65,9 @@
     <property name="java.class.version" value="65.0"/>
     <property name="LOGGED_APPLICATION_NAME" value="[PeerTubeMiner] "/>
   </properties>
-  <testcase name="getVideos" classname="aiss_L3.PeerTubeMiner.VideoServiceTest" time="0.431">
-    <system-out><![CDATA[2026-05-04T11:43:09.159+02:00  INFO 18724 --- [PeerTubeMiner] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [aiss_L3.PeerTubeMiner.VideoServiceTest]: VideoServiceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2026-05-04T11:43:09.171+02:00  INFO 18724 --- [PeerTubeMiner] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration aiss_L3.PeerTubeMiner.PeerTubeMinerApplication for test class aiss_L3.PeerTubeMiner.VideoServiceTest
-]]></system-out>
-  </testcase>
-  <testcase name="getVideoById" classname="aiss_L3.PeerTubeMiner.VideoServiceTest" time="0.762">
-    <system-out><![CDATA[Validando vídeo: nicer-cross-fade
-  -> Subtítulos encontrados: 0
+  <testcase name="contextLoads" classname="aiss_L3.PeerTubeMiner.PeerTubeMinerApplicationTests" time="0.019">
+    <system-out><![CDATA[2026-05-04T11:43:09.093+02:00  INFO 18724 --- [PeerTubeMiner] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [aiss_L3.PeerTubeMiner.PeerTubeMinerApplicationTests]: PeerTubeMinerApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-05-04T11:43:09.105+02:00  INFO 18724 --- [PeerTubeMiner] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration aiss_L3.PeerTubeMiner.PeerTubeMinerApplication for test class aiss_L3.PeerTubeMiner.PeerTubeMinerApplicationTests
 ]]></system-out>
   </testcase>
 </testsuite>
