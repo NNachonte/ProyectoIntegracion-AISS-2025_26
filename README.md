@@ -1,11 +1,11 @@
-# 📺 VideoMiner: Integrated Video Aggregator
+#  VideoMiner: Integrated Video Aggregator
 
-![Java](https://img.shields.io/badge/Java-17%2B-orange?style=flat-square&logo=java)
-![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2.0-brightgreen?style=flat-square&logo=springboot)
+![Java](https://img.shields.io/badge/Java-21-orange?style=flat-square&logo=java)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5.13-brightgreen?style=flat-square&logo=springboot)
 
 Este proyecto es un sistema de integración de servicios de vídeo desarrollado para la asignatura **Arquitectura e Integración de Sistemas Software (AISS)**. Su objetivo es unificar la búsqueda y gestión de vídeos provenientes de plataformas descentralizadas (**PeerTube**) y tradicionales (**DailyMotion**) en una única API centralizada.
 
-## 🏗️ Arquitectura del Sistema
+##  Arquitectura del Sistema
 
 El sistema se divide en tres microservicios principales:
 
@@ -15,41 +15,85 @@ El sistema se divide en tres microservicios principales:
 
 ---
 
-## 🚀 API Endpoints
+##  API Endpoints
 
 A continuación se detallan las operaciones mínimas para la comunicación entre módulos y el acceso del cliente.
 
-### 🧠 VideoMiner (Central API)
-Es el núcleo del sistema. Recibe los datos de los miners y sirve la información al cliente.
+| Microservicio | URL base | 
+| :--- | :--- |
+| VideoMiner | `http://localhost:8080` |
+| DailyMotionMiner | `http://localhost:8081` |
+| PeerTubeMiner | `http://localhost:8082` |
+
+###  VideoMiner (API)
+Es el núcleo del sistema. Recibe los datos de los miners y sirve la información al cliente. Estos son los recursos y sus endpoints:
+
+#### Canales
 
 | Método | Endpoint | Descripción |
 | :--- | :--- | :--- |
-| `POST` | `/videominer/videos` | **Ingesta:** Recibe vídeos de los miners y los guarda. |
-| `GET` | `/videominer/videos` | Lista todos los vídeos almacenados. |
-| `GET` | `/videominer/videos/{id}` | Obtiene los detalles de un vídeo específico. |
+| `POST` | `/channels` | **Recolección:** Recibe canales de los miners y los guarda. (Usado internamente). |
+| `GET` | `/channels` | Lista los canales almacenados. |
+| `GET` | `/channels/{id}` | Muestra los detalles del canal especificado por su id |
 
-### 🔍 Miners (PeerTube & DailyMotion)
-Servicios especializados en la extracción de datos (ETL). {platform} es intercambiable por 'peertube' o 'dailymotion'. En el caso de PeerTube usar el puerto 8082 y en el de DailyMotion 8081
+#### Vídeos
 
 | Método | Endpoint | Descripción |
 | :--- | :--- | :--- |
-| `POST` | `http://localhost:808x/{platform}/channels/{id}` | Inicia una búsqueda en la plataforma y envía el vídeo seleccionado a VideoMiner. |
-| `GET` | `http://localhost:808x/{platform}/channels` | Lista todos los canales de la plataforma. |
-| `GET` | `http://localhost:808x/{platform}/channels/{id}` | Muestra los detalles del canal especificado con su id. |
-| `GET` | `http://localhost:808x/{platform}/videos` | Lista los vídeos de la plataforma. |
-| `GET` | `http://localhost:808x/{platform}/videos/{id}` | Muestra los detalles del video especificado con su id. |
+| `GET` | `/videos` | Lista los vídeos almacenados. |
+| `GET` | `/videos/{id}` | Muestra los detalles del vídeo especificado por su id |
+
+#### Comentarios
+
+| Método | Endpoint | Descripción |
+| :--- | :--- | :--- |
+| `GET` | `/comments` | Lista los comentarios almacenados |
+| `GET` | `/comments/{id}` | Muestra los detalles del comentario especificado por su id |
+| `GET` | `/videos/{videoId}/comments` | Muestra los detalles de los comentarios del vídeo especificado por su id. |
+
+
+#### Subtítulos
+
+| Método | Endpoint | Descripción |
+| :--- | :--- | :--- |
+| `GET` | `/captions` | Lista los subtítulos almacenados |
+| `GET` | `/captions/{id}` | Muestra los detalles de los subtítulos especificados por su id |
+| `GET` | `/videos/{videoId}/captions` | Muestra los detalles de los subtítulos del vídeo especificado por su id. |
+
+
+###  Miners (PeerTube & DailyMotion)
+Servicios especializados en la extracción de datos (ETL). `{platform}` es intercambiable por 'peertube' o 'dailymotion'.  
+
+| Método | Endpoint | Descripción |
+| :--- | :--- | :--- |
+| `POST` | `{platform}/channels/{id}` | Inicia una búsqueda en la plataforma y envía el canal seleccionado a VideoMiner, que lo guarda. |
+#### Parámetros opcionales
+`maxVideos`: La operación devolverá el número de vídeos por canal introducido como parámetro. Valor por defecto: 10.
+
+`maxComments`: Solo usable con PeerTubeMiner. La operación devolverá el número de comentarios por video introducido como parámetro. Valor por defecto: 2.
+
+`maxPages`: Solo usable con DailyMotionMiner. Número máximo de páginas de resultados a devolver. Valor por defecto: 2.
+
+
+
+| Método | Endpoint | Descripción |
+| :--- | :--- | :--- |
+| `GET` | `{platform}/channels` | Lista todos los canales de la plataforma. |
+| `GET` | `{platform}/channels/{id}` | Muestra los detalles del canal especificado con su id. |
+| `GET` | `{platform}/videos` | Lista los vídeos de la plataforma. |
+| `GET` | `{platform}/videos/{id}` | Muestra los detalles del vídeo especificado con su id. |
 
 ---
 
-## 🛠️ Tecnologías Utilizadas
+##  Tecnologías Utilizadas
 
-*   **Framework:** Spring Boot 3.x
+*   **Framework:** Spring Boot 3.5.13
 *   **Gestión de Dependencias:** Maven
 *   **Comunicación:** REST (RestTemplate / WebClient)
 *   **Documentación API:** Swagger / OpenAPI 
 *   **Base de Datos:** H2 / JPA Hibernate
 
-## 📦 Instalación y Uso
+##  Instalación y Uso
 
 1. **Clonar el repositorio:**
    ```bash
