@@ -48,7 +48,7 @@ class VideoServiceTest {
                 + "/comments?fields=id,message,created_time&limit=" + maxComments;
 
         String captionsUrl = "https://api.dailymotion.com/video/" + videoId
-                + "/subtitles?fields=id,language,language_label,url,format";
+                + "/subtitles?fields=id,language,language_label,url";
 
         String videoJson = "{"
                 + "\"id\":\"x1\","
@@ -132,7 +132,7 @@ class VideoServiceTest {
                 + "/comments?fields=id,message,created_time&limit=2";
 
         String captionsUrl = "https://api.dailymotion.com/video/x1"
-                + "/subtitles?fields=id,language,language_label,url,format";
+                + "/subtitles?fields=id,language,language_label,url";
 
         String videoJson = "{"
                 + "\"id\":\"x1\","

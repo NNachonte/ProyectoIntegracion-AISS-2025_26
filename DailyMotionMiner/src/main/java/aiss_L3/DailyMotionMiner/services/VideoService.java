@@ -78,7 +78,7 @@ public class VideoService {
             }
         }
 
-        String captionsUrl = baseUrl + "/video/" + id + "/subtitles?fields=id,language,language_label,url,format";
+        String captionsUrl = baseUrl + "/video/" + id + "/subtitles?fields=id,language,language_label,url";
         CaptionSearchDM captionResponse = restTemplate.getForObject(captionsUrl, CaptionSearchDM.class);
         if (captionResponse != null && captionResponse.getList() != null) {
             for (CaptionDM dmCaption : captionResponse.getList()) {

@@ -19,7 +19,9 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class ChannelService {
@@ -38,6 +40,10 @@ public class ChannelService {
     private final String baseUrl = "https://api.dailymotion.com";
     private final String channelFields = "id,name,description,created_time";
     private final String videoFields = "id,title,description,created_time,channel,channel.name,channel.description,channel.created_time,owner,owner.screenname,owner.url,owner.avatar_720_url";
+
+    private static final int DEFAULT_MAX_VIDEOS = 10;
+    private static final int DEFAULT_MAX_PAGES = 2;
+    private static final int DEFAULT_MAX_COMMENTS = 2;
 
     public List<Channel> getChannels() {
         String url = baseUrl + "/channels?fields=" + channelFields;
@@ -61,7 +67,7 @@ public class ChannelService {
         return transformedChannels;
     }
 
-    public Channel getChannelById(String id, Integer maxVideos, Integer maxComments) {
+    public Channel getChannelById(String id, Integer maxVideos, Integer maxPages) {
         String channelUrl = baseUrl + "/channel/" + id + "?fields=" + channelFields;
         ChannelDM channelJson;
 
@@ -79,34 +85,50 @@ public class ChannelService {
 
         Channel channel = transformer.transformChannel(channelJson);
 
-        int limit = (maxVideos != null) ? maxVideos : 10;
-        String videosUrl = baseUrl + "/channel/" + id + "/videos?fields=" + videoFields + "&limit=" + limit;
-        
-        try {
-            VideoSearchDM videoResponse = restTemplate.getForObject(videosUrl, VideoSearchDM.class);
-            if (videoResponse != null && videoResponse.getList() != null) {
+        int limitPerPage = (maxVideos != null && maxVideos > 0) ? maxVideos : DEFAULT_MAX_VIDEOS;
+        int pagesToFetch = (maxPages != null && maxPages > 0) ? maxPages : DEFAULT_MAX_PAGES;
+
+        Set<String> seenVideoIds = new HashSet<>();
+
+        for (int page = 1; page <= pagesToFetch; page++) {
+            String videosUrl = baseUrl + "/channel/" + id + "/videos?fields=" + videoFields
+                    + "&limit=" + limitPerPage
+                    + "&page=" + page;
+
+            try {
+                VideoSearchDM videoResponse = restTemplate.getForObject(videosUrl, VideoSearchDM.class);
+                if (videoResponse == null || videoResponse.getList() == null || videoResponse.getList().isEmpty()) {
+                    break;
+                }
+
                 for (VideoDM dmVideo : videoResponse.getList()) {
-                    if (dmVideo != null && dmVideo.getId() != null) {
-                        try {
-                            Video fullVideo = videoService.getVideoById(dmVideo.getId(), maxComments);
-                            if (fullVideo != null) {
-                                channel.getVideos().add(fullVideo);
-                            }
-                        } catch (RuntimeException e) {
-                            log.warn("Skipping video {} for channel {} due to error: {}", dmVideo.getId(), id, e.getMessage());
+                    if (dmVideo == null || dmVideo.getId() == null) continue;
+                    if (!seenVideoIds.add(dmVideo.getId())) continue;
+
+                    try {
+                        Video fullVideo = videoService.getVideoById(dmVideo.getId(), DEFAULT_MAX_COMMENTS);
+                        if (fullVideo != null) {
+                            channel.getVideos().add(fullVideo);
                         }
+                    } catch (RuntimeException e) {
+                        log.warn("Skipping video {} for channel {} due to error: {}", dmVideo.getId(), id, e.getMessage());
                     }
                 }
+
+                if (Boolean.FALSE.equals(videoResponse.getHasMore())) {
+                    break;
+                }
+            } catch (RestClientException e) {
+                log.warn("Error fetching videos for channel {} (page {}). Detail: {}", id, page, e.getMessage());
+                break;
             }
-        } catch (RestClientException e) {
-            log.warn("Error fetching videos for channel {}. Detail: {}", id, e.getMessage());
         }
 
         return channel;
     }
 
-    public Channel postChannel(String id, Integer maxVideos, Integer maxComments) {
-        Channel channel = getChannelById(id, maxVideos, maxComments);
+    public Channel postChannel(String id, Integer maxVideos, Integer maxPages) {
+        Channel channel = getChannelById(id, maxVideos, maxPages);
 
         String videoMinerUrl = "http://localhost:8080/videominer/channels";
         return restTemplate.postForObject(videoMinerUrl, channel, Channel.class);

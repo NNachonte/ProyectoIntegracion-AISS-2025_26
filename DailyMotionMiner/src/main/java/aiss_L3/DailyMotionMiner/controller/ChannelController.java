@@ -33,8 +33,8 @@ public class ChannelController {
     public Channel getChannelById(
             @PathVariable("id") String id,
             @RequestParam(value = "maxVideos", required = false, defaultValue = "10") Integer maxVideos,
-            @RequestParam(value = "maxComments", required = false, defaultValue = "2") Integer maxComments) {
-        return channelService.getChannelById(id, maxVideos, maxComments);
+            @RequestParam(value = "maxPages", required = false, defaultValue = "2") Integer maxPages) {
+        return channelService.getChannelById(id, maxVideos, maxPages);
     }
 
     // POST /dailymotion/channels/{id} → envía el canal a VideoMiner
@@ -43,7 +43,7 @@ public class ChannelController {
     public Channel createChannelInVideoMiner(
             @PathVariable("id") String id,
             @RequestParam(value = "maxVideos", defaultValue = "10") Integer maxVideos,
-            @RequestParam(value = "maxComments", defaultValue = "2") Integer maxComments) {
-        return channelService.postChannel(id, maxVideos, maxComments);
+            @RequestParam(value = "maxPages", defaultValue = "2") Integer maxPages) {
+        return channelService.postChannel(id, maxVideos, maxPages);
     }
 }

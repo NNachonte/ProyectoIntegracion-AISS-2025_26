@@ -44,7 +44,7 @@ class ChannelServiceTest {
         boolean dataFound = false;
 
         for (Channel basicChannel : top10Channels) {
-            // Hacemos la llamada profunda para sacar el canal con sus vídeos (1 vídeo, 1 comentario)
+            // Hacemos la llamada profunda para sacar el canal con sus vídeos (1 vídeo por página, 1 página)
             Channel fullChannel = channelService.getChannelById(basicChannel.getId(), 1, 1);
 
             if (fullChannel != null && fullChannel.getVideos() != null && !fullChannel.getVideos().isEmpty()) {
