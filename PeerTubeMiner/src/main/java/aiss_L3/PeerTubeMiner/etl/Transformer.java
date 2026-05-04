@@ -58,7 +58,11 @@ public class Transformer {
 
         User user = new User();
 
-        user.setId(Long.valueOf(ptAccount.getId()));
+        // IMPORTANTE (persistencia en VideoMiner):
+        // VideoMiner usa IDs autogenerados para User. Si enviamos un id fijo (p.ej. 3)
+        // para muchos vídeos, JPA intentará insertar duplicados y el POST fallará.
+        // Dejarlo a null permite que VideoMiner genere IDs únicos.
+        user.setId(null);
         user.setName(ptAccount.getName());
         user.setUser_link(ptAccount.getUrl());
         user.setPicture_link(ptAccount.getAvatars() != null 
@@ -67,26 +71,33 @@ public class Transformer {
         return user;
     }
 
-    public Caption transformCaption(CaptionPT ptCaption) {
+    public Caption transformCaption(CaptionPT ptCaption, String videoId) {
         if (ptCaption == null || ptCaption.getLanguage() == null) return null;
 
         Caption caption = new Caption();
 
-        caption.setId(ptCaption.getLanguage().getId());
+        // IMPORTANTE (persistencia en VideoMiner):
+        // En el modelo, Caption.id es la PK. Si usamos solo el language id ("en"),
+        // colisiona entre vídeos. Hacemos el id único por vídeo.
+        String langId = ptCaption.getLanguage().getId();
+        String safeVideoId = videoId != null ? videoId : "video";
+        caption.setId(safeVideoId + "_" + langId);
         caption.setName(ptCaption.getLanguage().getLabel());
-        caption.setLanguage(ptCaption.getLanguage().getId());
+        caption.setLanguage(langId);
 
         return caption;
     }
 
-    public Comment transformComment(CommentPT ptComment) {
+    public Comment transformComment(CommentPT ptComment, String videoId) {
         if (ptComment.getText() == null || ptComment.getText().trim().isEmpty()) {
             return null;
         }
 
         Comment comment = new Comment();
 
-        comment.setId(String.valueOf(ptComment.getId()));
+        // Hacemos el id único por vídeo para evitar colisiones entre vídeos/canales.
+        String safeVideoId = videoId != null ? videoId : "video";
+        comment.setId(safeVideoId + "_" + ptComment.getId());
         comment.setText(ptComment.getText());
         comment.setCreatedOn(ptComment.getCreatedAt());
         

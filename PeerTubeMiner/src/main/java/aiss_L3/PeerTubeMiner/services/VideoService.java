@@ -108,7 +108,7 @@ public class VideoService {
 
         if (commentResponse != null && commentResponse.getData() != null) {
             for (CommentPT ptComment : commentResponse.getData()) {
-                Comment comentarioTransformado = transformer.transformComment(ptComment);
+                Comment comentarioTransformado = transformer.transformComment(ptComment, video.getId());
         
                 // ¡ESTE ES EL FILTRO CRUCIAL!
                 // Solo añadimos el comentario si tiene texto real. 
@@ -132,7 +132,7 @@ public class VideoService {
         
         if (captionResponse != null && captionResponse.getData() != null) {
             for (CaptionPT ptCaption : captionResponse.getData()) {
-                Caption caption = transformer.transformCaption(ptCaption);
+                Caption caption = transformer.transformCaption(ptCaption, video.getId());
                 video.getCaptions().add(caption); 
             }
         }
