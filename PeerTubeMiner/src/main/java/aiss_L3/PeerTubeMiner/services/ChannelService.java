@@ -29,7 +29,7 @@ public class ChannelService {
     VideoService videoService;
 
     public List<Channel> getChannels() {
-    String url = "https://peertube2.cpy.re/api/v1/video-channels";
+    String url = "https://peertube.tv/api/v1/video-channels";   
     ChannelSearchPt channelsJson = restTemplate.getForObject(url, ChannelSearchPt.class);
 
     List<Channel> channelsTransformados = new ArrayList<>();
@@ -69,7 +69,7 @@ public class ChannelService {
     public Channel getChannelById(String id) {
         try{
             // 1. Obtenemos el canal (Usando peertube2 como ya vimos)
-            String baseUrl = "https://peertube2.cpy.re/api/v1";
+            String baseUrl = "https://peertube.tv/api/v1";
             ChannelPT ptChannel = restTemplate.getForObject(baseUrl + "/video-channels/" + id, ChannelPT.class);
             Channel channel = transformer.transformChannel(ptChannel);
 
@@ -110,7 +110,7 @@ public class ChannelService {
 
         // 2. Intentamos recuperar el canal de PeerTube
         // Aquí es donde saltaba el error 404 si el ID no era correcto
-        String baseUrl = "https://peertube2.cpy.re/api/v1/video-channels/" + id;
+        String baseUrl = "https://peertube.tv/api/v1/video-channels/" + id;
         ChannelPT ptChannel = restTemplate.getForObject(baseUrl, ChannelPT.class);
         
         // Transformamos el canal

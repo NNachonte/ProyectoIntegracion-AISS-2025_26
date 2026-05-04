@@ -28,7 +28,7 @@ public class VideoService {
     @Autowired
     RestTemplate restTemplate;
 
-    private final String baseUrl = "https://peertube2.cpy.re/api/v1";
+    private final String baseUrl = "https://peertube.tv/api/v1";
 
     public List<Video> getVideos() {
         String url = baseUrl + "/videos";
