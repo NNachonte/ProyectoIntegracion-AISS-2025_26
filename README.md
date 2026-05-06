@@ -98,3 +98,14 @@ Servicios especializados en la extracción de datos (ETL). `{platform}` es inter
 1. **Clonar el repositorio:**
    ```bash
    git clone [https://github.com/NNachonte/ProyectoIntegracion-AISS-2025_26.git](https://github.com/NNachonte/ProyectoIntegracion-AISS-2025_26.git)
+
+## Comandos rapidos (Windows)
+
+Desde la raiz del repo puedes arrancar y parar los tres servicios con:
+
+```bash
+npm run start:all
+npm run stop:all
+```
+
+Los logs se guardan en la carpeta `logs/` y los PIDs en `.service-pids.json`.
