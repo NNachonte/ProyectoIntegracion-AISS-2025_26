@@ -5,6 +5,18 @@
 
 Este proyecto es un sistema de integración de servicios de vídeo desarrollado para la asignatura **Arquitectura e Integración de Sistemas Software (AISS)**. Su objetivo es unificar la búsqueda y gestión de vídeos provenientes de plataformas descentralizadas (**PeerTube**) y tradicionales (**DailyMotion**) en una única API centralizada.
 
+---
+
+## Documentación interactiva
+
+**Videominer:** http://localhost:8080/videominer/swagger-ui/index.html
+
+**DailyMotion:** http://localhost:8081/swagger-ui/index.html
+
+**PeerTube:** http://localhost:8082/swagger-ui/index.html
+
+---
+
 ##  Arquitectura del Sistema
 
 El sistema se divide en tres microservicios principales:
