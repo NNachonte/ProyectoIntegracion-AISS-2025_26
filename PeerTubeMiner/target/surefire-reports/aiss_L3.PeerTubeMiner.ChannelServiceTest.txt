@@ -1,4 +1,12 @@
 -------------------------------------------------------------------------------
 Test set: aiss_L3.PeerTubeMiner.ChannelServiceTest
 -------------------------------------------------------------------------------
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 13.53 s -- in aiss_L3.PeerTubeMiner.ChannelServiceTest
+Tests run: 2, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 12.50 s <<< FAILURE! -- in aiss_L3.PeerTubeMiner.ChannelServiceTest
+aiss_L3.PeerTubeMiner.ChannelServiceTest.testGetChannelById -- Time elapsed: 3.772 s <<< ERROR!
+aiss_L3.PeerTubeMiner.exception.ResourceNotFoundException: Channel not found on PeerTube: lemmikute_nunnude
+	at aiss_L3.PeerTubeMiner.services.ChannelService.getChannelById(ChannelService.java:93)
+	at aiss_L3.PeerTubeMiner.ChannelServiceTest.testGetChannelById(ChannelServiceTest.java:85)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+

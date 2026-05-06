@@ -1,26 +1,26 @@
-C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\ProyectoIntegracion-AISS-2025_26\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\config\RestTemplateConfig.java
-C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\ProyectoIntegracion-AISS-2025_26\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\controller\ChannelController.java
-C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\ProyectoIntegracion-AISS-2025_26\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\controller\VideoController.java
-C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\ProyectoIntegracion-AISS-2025_26\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\etl\Transformer.java
-C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\ProyectoIntegracion-AISS-2025_26\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\exception\GlobalExceptionHandler.java
-C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\ProyectoIntegracion-AISS-2025_26\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\exception\PeerTubeApiException.java
-C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\ProyectoIntegracion-AISS-2025_26\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\exception\ResourceNotFoundException.java
-C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\ProyectoIntegracion-AISS-2025_26\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\model\peertube\AccountPT.java
-C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\ProyectoIntegracion-AISS-2025_26\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\model\peertube\AvatarPT.java
-C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\ProyectoIntegracion-AISS-2025_26\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\model\peertube\CaptionPT.java
-C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\ProyectoIntegracion-AISS-2025_26\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\model\peertube\CaptionSearchPT.java
-C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\ProyectoIntegracion-AISS-2025_26\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\model\peertube\ChannelPT.java
-C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\ProyectoIntegracion-AISS-2025_26\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\model\peertube\ChannelSearchPt.java
-C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\ProyectoIntegracion-AISS-2025_26\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\model\peertube\CommentPT.java
-C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\ProyectoIntegracion-AISS-2025_26\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\model\peertube\CommentSearchPT.java
-C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\ProyectoIntegracion-AISS-2025_26\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\model\peertube\LanguagePT.java
-C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\ProyectoIntegracion-AISS-2025_26\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\model\peertube\VideoPT.java
-C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\ProyectoIntegracion-AISS-2025_26\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\model\peertube\VideoSearchPT.java
-C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\ProyectoIntegracion-AISS-2025_26\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\model\videominer\Caption.java
-C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\ProyectoIntegracion-AISS-2025_26\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\model\videominer\Channel.java
-C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\ProyectoIntegracion-AISS-2025_26\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\model\videominer\Comment.java
-C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\ProyectoIntegracion-AISS-2025_26\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\model\videominer\User.java
-C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\ProyectoIntegracion-AISS-2025_26\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\model\videominer\Video.java
-C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\ProyectoIntegracion-AISS-2025_26\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\PeerTubeMinerApplication.java
-C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\ProyectoIntegracion-AISS-2025_26\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\services\ChannelService.java
-C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\ProyectoIntegracion-AISS-2025_26\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\services\VideoService.java
+C:\UNI\AISS\proyectoIntegr\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\config\RestTemplateConfig.java
+C:\UNI\AISS\proyectoIntegr\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\controller\ChannelController.java
+C:\UNI\AISS\proyectoIntegr\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\controller\VideoController.java
+C:\UNI\AISS\proyectoIntegr\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\etl\Transformer.java
+C:\UNI\AISS\proyectoIntegr\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\exception\GlobalExceptionHandler.java
+C:\UNI\AISS\proyectoIntegr\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\exception\PeerTubeApiException.java
+C:\UNI\AISS\proyectoIntegr\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\exception\ResourceNotFoundException.java
+C:\UNI\AISS\proyectoIntegr\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\model\peertube\AccountPT.java
+C:\UNI\AISS\proyectoIntegr\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\model\peertube\AvatarPT.java
+C:\UNI\AISS\proyectoIntegr\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\model\peertube\CaptionPT.java
+C:\UNI\AISS\proyectoIntegr\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\model\peertube\CaptionSearchPT.java
+C:\UNI\AISS\proyectoIntegr\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\model\peertube\ChannelPT.java
+C:\UNI\AISS\proyectoIntegr\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\model\peertube\ChannelSearchPt.java
+C:\UNI\AISS\proyectoIntegr\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\model\peertube\CommentPT.java
+C:\UNI\AISS\proyectoIntegr\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\model\peertube\CommentSearchPT.java
+C:\UNI\AISS\proyectoIntegr\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\model\peertube\LanguagePT.java
+C:\UNI\AISS\proyectoIntegr\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\model\peertube\VideoPT.java
+C:\UNI\AISS\proyectoIntegr\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\model\peertube\VideoSearchPT.java
+C:\UNI\AISS\proyectoIntegr\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\model\videominer\Caption.java
+C:\UNI\AISS\proyectoIntegr\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\model\videominer\Channel.java
+C:\UNI\AISS\proyectoIntegr\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\model\videominer\Comment.java
+C:\UNI\AISS\proyectoIntegr\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\model\videominer\User.java
+C:\UNI\AISS\proyectoIntegr\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\model\videominer\Video.java
+C:\UNI\AISS\proyectoIntegr\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\PeerTubeMinerApplication.java
+C:\UNI\AISS\proyectoIntegr\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\services\ChannelService.java
+C:\UNI\AISS\proyectoIntegr\PeerTubeMiner\src\main\java\aiss_L3\PeerTubeMiner\services\VideoService.java
