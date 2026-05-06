@@ -1,51 +1,12 @@
 {
   "info": {
-    "_postman_id": "8124f030-a09d-4c57-aee2-57ac9cb9bea5",
-    "name": "Proyecto Integración AISS - Miners",
+    "_postman_id": "c6f07860-45a1-4a9f-879f-0bfc059af182",
+    "name": "Proyecto Integracion AISS - Miners",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "53234513",
-    "_collection_link": "https://go.postman.co/collection/53234513-8124f030-a09d-4c57-aee2-57ac9cb9bea5?source=collection_link"
+    "_collection_link": "https://go.postman.co/collection/53234513-c6f07860-45a1-4a9f-879f-0bfc059af182?source=collection_link"
   },
   "item": [
-    {
-      "name": "Get DM",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "https://api.dailymotion.com/users?fields=id,fullname,url,avatar_url",
-          "protocol": "https",
-          "host": [
-            "api",
-            "dailymotion",
-            "com"
-          ],
-          "path": [
-            "users"
-          ],
-          "query": [
-            {
-              "key": "channel",
-              "value": "news",
-              "disabled": true
-            },
-            {
-              "key": "fields",
-              "value": "id,fullname,url,avatar_url"
-            }
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Get PT",
-      "request": {
-        "method": "GET",
-        "header": []
-      },
-      "response": []
-    },
     {
       "name": "Get DailymotionMiner",
       "event": [
@@ -71,6 +32,45 @@
       ],
       "request": {
         "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8081/dailymotion/channels/people",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8081",
+          "path": [
+            "dailymotion",
+            "channels",
+            "people"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Post DailymotionMiner",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 201\", () => { pm.response.to.have.status(201); });",
+              "const data = pm.response.json();",
+              "pm.test(\"Response has id and videos\", () => {",
+              "  pm.expect(data.id).to.exist;",
+              "  pm.expect(data.videos).to.exist;",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
         "header": [],
         "url": {
           "raw": "http://localhost:8081/dailymotion/channels/people",
@@ -130,45 +130,6 @@
       "response": []
     },
     {
-      "name": "Post DailymotionMiner",
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "exec": [
-              "pm.test(\"Status code is 201\", () => { pm.response.to.have.status(201); });",
-              "const data = pm.response.json();",
-              "pm.test(\"Response has id and videos\", () => {",
-              "  pm.expect(data.id).to.exist;",
-              "  pm.expect(data.videos).to.exist;",
-              "});"
-            ],
-            "type": "text/javascript",
-            "packages": {},
-            "requests": {}
-          }
-        }
-      ],
-      "request": {
-        "method": "POST",
-        "header": [],
-        "url": {
-          "raw": "http://localhost:8081/dailymotion/channels/people",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8081",
-          "path": [
-            "dailymotion",
-            "channels",
-            "people"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
       "name": "Post PeertubeMiner",
       "event": [
         {
@@ -191,100 +152,139 @@
       "request": {
         "method": "POST",
         "header": [],
+        "url": {
+          "raw": "http://localhost:8082/peertube/channels/tv",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8082",
+          "path": [
+            "peertube",
+            "channels",
+            "tv"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get TwitchMiner",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", () => { pm.response.to.have.status(200); });",
+              "const data = pm.response.json();",
+              "pm.test(\"Response is an array\", () => { pm.expect(Array.isArray(data)).to.be.true; });",
+              "if (data.length > 0) {",
+              "  pm.test(\"First item has id and name\", () => {",
+              "    pm.expect(data[0].id).to.exist;",
+              "    pm.expect(data[0].name).to.exist;",
+              "  });",
+              "}"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8083/twitch/channels?query=Twitch",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8083",
+          "path": [
+            "twitch",
+            "channels"
+          ],
+          "query": [
             {
-              "name": "Get TwitchMiner",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "exec": [
-                      "pm.test(\"Status code is 200\", () => { pm.response.to.have.status(200); });",
-                      "const data = pm.response.json();",
-                      "pm.test(\"Response is an array\", () => { pm.expect(Array.isArray(data)).to.be.true; });",
-                      "if (data.length > 0) {",
-                      "  pm.test(\"First item has id and name\", () => {",
-                      "    pm.expect(data[0].id).to.exist;",
-                      "    pm.expect(data[0].name).to.exist;",
-                      "  });",
-                      "}"
-                    ],
-                    "type": "text/javascript",
-                    "packages": {},
-                    "requests": {}
-                  }
-                }
-              ],
-              "request": {
-                "method": "GET",
-                "header": [],
-                "url": {
-                  "raw": "http://localhost:8083/twitch/channels?query=gaming",
-                  "protocol": "http",
-                  "host": [
-                    "localhost"
-                  ],
-                  "port": "8083",
-                  "path": [
-                    "twitch",
-                    "channels"
-                  ],
-                  "query": [
-                    {
-                      "key": "query",
-                      "value": "gaming"
-                    }
-                  ]
-                }
-              },
-              "response": []
-            },
+              "key": "query",
+              "value": "Twitch"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get TwitchMiner Videos",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", () => { pm.response.to.have.status(200); });",
+              "const data = pm.response.json();",
+              "pm.test(\"Response is an array\", () => { pm.expect(Array.isArray(data)).to.be.true; });",
+              "if (data.length > 0) {",
+              "  pm.test(\"First item has id and name\", () => {",
+              "    pm.expect(data[0].id).to.exist;",
+              "    pm.expect(data[0].name).to.exist;",
+              "  });",
+              "}"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8083/twitch/videos?query=Twitch",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8083",
+          "path": [
+            "twitch",
+            "videos"
+          ],
+          "query": [
             {
-              "name": "Get TwitchMiner Videos",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "exec": [
-                      "pm.test(\"Status code is 200\", () => { pm.response.to.have.status(200); });",
-                      "const data = pm.response.json();",
-                      "pm.test(\"Response is an array\", () => { pm.expect(Array.isArray(data)).to.be.true; });",
-                      "if (data.length > 0) {",
-                      "  pm.test(\"First item has id and name\", () => {",
-                      "    pm.expect(data[0].id).to.exist;",
-                      "    pm.expect(data[0].name).to.exist;",
-                      "  });",
-                      "}"
-                    ],
-                    "type": "text/javascript",
-                    "packages": {},
-                    "requests": {}
-                  }
-                }
-              ],
-              "request": {
-                "method": "GET",
-                "header": [],
-                "url": {
-                  "raw": "http://localhost:8083/twitch/videos?query=gaming",
-                  "protocol": "http",
-                  "host": [
-                    "localhost"
-                  ],
-                  "port": "8083",
-                  "path": [
-                    "twitch",
-                    "videos"
-                  ],
-                  "query": [
-                    {
-                      "key": "query",
-                      "value": "gaming"
-                    }
-                  ]
-                }
-              },
-              "response": []
-            },
+              "key": "query",
+              "value": "Twitch"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Post TwitchMiner",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 201\", () => { pm.response.to.have.status(201); });",
+              "const data = pm.response.json();",
+              "pm.test(\"Response has id and videos\", () => {",
+              "  pm.expect(data.id).to.exist;",
+              "  pm.expect(data.videos).to.exist;",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
         "url": {
           "raw": "http://localhost:8082/peertube/channels/tv",
           "protocol": "http",
