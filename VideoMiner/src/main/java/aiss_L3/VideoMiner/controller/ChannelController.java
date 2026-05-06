@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
+
 import aiss_L3.VideoMiner.exception.ChannelNotFoundException;
 import aiss_L3.VideoMiner.model.Channel;
 import aiss_L3.VideoMiner.repository.ChannelRepository;
@@ -39,7 +41,7 @@ public class ChannelController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Channel create(@RequestBody Channel channel) {
+    public Channel create(@Valid @RequestBody Channel channel) {
         return channelRepository.save(channel);
     }
 }

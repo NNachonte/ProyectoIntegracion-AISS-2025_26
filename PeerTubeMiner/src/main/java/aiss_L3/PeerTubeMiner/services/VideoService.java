@@ -4,12 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.stereotype.Service;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpHeaders;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import aiss_L3.PeerTubeMiner.etl.Transformer;
+import aiss_L3.PeerTubeMiner.exception.PeerTubeApiException;
+import aiss_L3.PeerTubeMiner.exception.ResourceNotFoundException;
 import aiss_L3.PeerTubeMiner.model.peertube.CaptionPT;
 import aiss_L3.PeerTubeMiner.model.peertube.CaptionSearchPT;
 import aiss_L3.PeerTubeMiner.model.peertube.CommentPT;
@@ -34,24 +38,53 @@ public class VideoService {
 
     private <T> T getForObjectWithRetry(String url, Class<T> responseType) {
         int attempts = 0;
-        long backoffMs = 250L;
+        long backoffMs = 500L;
 
         while (true) {
             try {
                 return restTemplate.getForObject(url, responseType);
             } catch (HttpClientErrorException.TooManyRequests e) {
                 attempts++;
-                if (attempts >= 3) {
+                if (attempts > 2) {
                     throw e;
                 }
+
+                long sleepMs;
+                if (attempts == 1) {
+                    sleepMs = resolveRetryAfterMs(e.getResponseHeaders(), backoffMs);
+                } else {
+                    sleepMs = backoffMs;
+                }
+
+                backoffMs = Math.min(backoffMs * 2, 2000L);
                 try {
-                    Thread.sleep(backoffMs);
+                    Thread.sleep(sleepMs);
                 } catch (InterruptedException ie) {
                     Thread.currentThread().interrupt();
                     throw e;
                 }
-                backoffMs *= 2;
             }
+        }
+    }
+
+    private long resolveRetryAfterMs(HttpHeaders headers, long defaultMs) {
+        if (headers == null) {
+            return defaultMs;
+        }
+
+        String retryAfter = headers.getFirst("Retry-After");
+        if (retryAfter == null) {
+            return defaultMs;
+        }
+
+        try {
+            long seconds = Long.parseLong(retryAfter.trim());
+            if (seconds < 0) {
+                return defaultMs;
+            }
+            return seconds * 1000L;
+        } catch (NumberFormatException ex) {
+            return defaultMs;
         }
     }
 
@@ -64,7 +97,11 @@ public class VideoService {
         try {
             videosJson = getForObjectWithRetry(url, VideoSearchPT.class);
         } catch (RestClientException e) {
-            return new ArrayList<>();
+            throw new PeerTubeApiException("Error fetching videos from PeerTube API", e);
+        }
+
+        if (videosJson == null) {
+            throw new PeerTubeApiException("Unexpected error communicating with PeerTube");
         }
 
         List<Video> videosTransformados = new ArrayList<>();
@@ -87,10 +124,17 @@ public class VideoService {
         VideoPT videoJson;
         try {
             videoJson = getForObjectWithRetry(videoUrl, VideoPT.class);
+        } catch (HttpClientErrorException e) {
+            if (e.getStatusCode() == HttpStatus.NOT_FOUND || e.getStatusCode() == HttpStatus.BAD_REQUEST) {
+                throw new ResourceNotFoundException("Video not found on PeerTube: " + id);
+            }
+            throw new PeerTubeApiException("Unexpected error communicating with PeerTube", e);
         } catch (RestClientException e) {
-            return null;
+            throw new PeerTubeApiException("Unexpected error communicating with PeerTube", e);
         }
-        if (videoJson == null) return null;
+        if (videoJson == null) {
+            throw new PeerTubeApiException("Unexpected error communicating with PeerTube");
+        }
         
         Video video = transformer.transformVideo(videoJson);
 
