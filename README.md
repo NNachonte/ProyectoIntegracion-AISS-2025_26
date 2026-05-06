@@ -21,9 +21,9 @@ A continuación se detallan las operaciones mínimas para la comunicación entre
 
 | Microservicio | URL base | 
 | :--- | :--- |
-| VideoMiner | `http://localhost:8080` |
-| DailyMotionMiner | `http://localhost:8081` |
-| PeerTubeMiner | `http://localhost:8082` |
+| VideoMiner | `http://localhost:8080/videominer` |
+| DailyMotionMiner | `http://localhost:8081/dailymotion` |
+| PeerTubeMiner | `http://localhost:8082/peertube` |
 
 ###  VideoMiner (API)
 Es el núcleo del sistema. Recibe los datos de los miners y sirve la información al cliente. Estos son los recursos y sus endpoints:
@@ -62,11 +62,11 @@ Es el núcleo del sistema. Recibe los datos de los miners y sirve la informació
 
 
 ###  Miners (PeerTube & DailyMotion)
-Servicios especializados en la extracción de datos (ETL). `{platform}` es intercambiable por 'peertube' o 'dailymotion'.  
+Servicios especializados en la extracción de datos (ETL).   
 
 | Método | Endpoint | Descripción |
 | :--- | :--- | :--- |
-| `POST` | `{platform}/channels/{id}` | Inicia una búsqueda en la plataforma y envía el canal seleccionado a VideoMiner, que lo guarda. |
+| `POST` | `/channels/{id}` | Inicia una búsqueda en la plataforma y envía el canal seleccionado a VideoMiner, que lo guarda. |
 #### Parámetros opcionales
 `maxVideos`: La operación devolverá el número de vídeos por canal introducido como parámetro. Valor por defecto: 10.
 
@@ -78,10 +78,10 @@ Servicios especializados en la extracción de datos (ETL). `{platform}` es inter
 
 | Método | Endpoint | Descripción |
 | :--- | :--- | :--- |
-| `GET` | `{platform}/channels` | Lista todos los canales de la plataforma. |
-| `GET` | `{platform}/channels/{id}` | Muestra los detalles del canal especificado con su id. |
-| `GET` | `{platform}/videos` | Lista los vídeos de la plataforma. |
-| `GET` | `{platform}/videos/{id}` | Muestra los detalles del vídeo especificado con su id. |
+| `GET` | `/channels` | Lista todos los canales de la plataforma. |
+| `GET` | `/channels/{id}` | Muestra los detalles del canal especificado con su id. |
+| `GET` | `/videos` | Lista los vídeos de la plataforma. |
+| `GET` | `/videos/{id}` | Muestra los detalles del vídeo especificado con su id. |
 
 ---
 
