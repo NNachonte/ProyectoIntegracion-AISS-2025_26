@@ -1,8 +1,10 @@
 // ChannelRepository.java
 package aiss_L3.VideoMiner.repository;
 import aiss_L3.VideoMiner.model.Channel;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ChannelRepository extends JpaRepository<Channel, String> {}
+public interface ChannelRepository extends JpaRepository<Channel, String>,JpaSpecificationExecutor<Channel> {}
