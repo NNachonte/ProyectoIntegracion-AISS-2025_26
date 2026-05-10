@@ -23,7 +23,7 @@ if [[ -z "${JAVA_HOME:-}" ]]; then
   fi
 fi
 
-SERVICES=("VideoMiner" "DailyMotionMiner" "PeerTubeMiner" "TwitchMiner")
+SERVICES=("VideoMiner" "DailyMotionMiner" "PeerTubeMiner")
 
 mkdir -p "$LOG_DIR"
 : > "$PID_FILE"

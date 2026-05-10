@@ -1,0 +1,678 @@
+{
+  "info": {
+    "_postman_id": "c6f07860-45a1-4a9f-879f-0bfc059af182",
+    "name": "Proyecto Integracion AISS - Miners",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "53234513",
+    "_collection_link": "https://go.postman.co/collection/53234513-c6f07860-45a1-4a9f-879f-0bfc059af182?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Get DailymotionMiner",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", () => { pm.response.to.have.status(200); });",
+              "const data = pm.response.json();",
+              "pm.test(\"Response is an array\", () => { pm.expect(Array.isArray(data)).to.be.true; });",
+              "if (data.length > 0) {",
+              "  pm.test(\"First item has id and name\", () => {",
+              "    pm.expect(data[0].id).to.exist;",
+              "    pm.expect(data[0].name).to.exist;",
+              "  });",
+              "}"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8081/dailymotion/channels/people",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8081",
+          "path": [
+            "dailymotion",
+            "channels",
+            "people"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Post DailymotionMiner",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 201\", () => { pm.response.to.have.status(201); });",
+              "const data = pm.response.json();",
+              "pm.test(\"Response has id and videos\", () => {",
+              "  pm.expect(data.id).to.exist;",
+              "  pm.expect(data.videos).to.exist;",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8081/dailymotion/channels/people",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8081",
+          "path": [
+            "dailymotion",
+            "channels",
+            "people"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get PeertubeMiner",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", () => { pm.response.to.have.status(200); });",
+              "const data = pm.response.json();",
+              "pm.test(\"Response is an array\", () => { pm.expect(Array.isArray(data)).to.be.true; });",
+              "if (data.length > 0) {",
+              "  pm.test(\"First item has id and name\", () => {",
+              "    pm.expect(data[0].id).to.exist;",
+              "    pm.expect(data[0].name).to.exist;",
+              "  });",
+              "}"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8082/peertube/channels",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8082",
+          "path": [
+            "peertube",
+            "channels"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Post PeertubeMiner",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 201\", () => { pm.response.to.have.status(201); });",
+              "const data = pm.response.json();",
+              "pm.test(\"Response has id and videos\", () => {",
+              "  pm.expect(data.id).to.exist;",
+              "  pm.expect(data.videos).to.exist;",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8082/peertube/channels/tv",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8082",
+          "path": [
+            "peertube",
+            "channels",
+            "tv"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get TwitchMiner",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", () => { pm.response.to.have.status(200); });",
+              "const data = pm.response.json();",
+              "pm.test(\"Response is an array\", () => { pm.expect(Array.isArray(data)).to.be.true; });",
+              "if (data.length > 0) {",
+              "  pm.test(\"First item has id and name\", () => {",
+              "    pm.expect(data[0].id).to.exist;",
+              "    pm.expect(data[0].name).to.exist;",
+              "  });",
+              "}"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8083/twitch/channels?query=Twitch",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8083",
+          "path": [
+            "twitch",
+            "channels"
+          ],
+          "query": [
+            {
+              "key": "query",
+              "value": "Twitch"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get TwitchMiner Videos",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", () => { pm.response.to.have.status(200); });",
+              "const data = pm.response.json();",
+              "pm.test(\"Response is an array\", () => { pm.expect(Array.isArray(data)).to.be.true; });",
+              "if (data.length > 0) {",
+              "  pm.test(\"First item has id and name\", () => {",
+              "    pm.expect(data[0].id).to.exist;",
+              "    pm.expect(data[0].name).to.exist;",
+              "  });",
+              "}"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8083/twitch/videos?query=Twitch",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8083",
+          "path": [
+            "twitch",
+            "videos"
+          ],
+          "query": [
+            {
+              "key": "query",
+              "value": "Twitch"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Post TwitchMiner",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 201\", () => { pm.response.to.have.status(201); });",
+              "const data = pm.response.json();",
+              "pm.test(\"Response has id and videos\", () => {",
+              "  pm.expect(data.id).to.exist;",
+              "  pm.expect(data.videos).to.exist;",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8082/peertube/channels/tv",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8082",
+          "path": [
+            "peertube",
+            "channels",
+            "tv"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Channel",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 201\", function () {\r",
+              "    pm.response.to.have.status(201);\r",
+              "});\r",
+              "\r",
+              "var jsonData = pm.response.json();\r",
+              "\r",
+              "pm.test(\"id property should have specific value\", () => { pm.expect(jsonData[\"id\"]).to.include(\"80\"); })"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"id\": \"80\",\r\n    \"name\": \"tv\",\r\n    \"description\": \"canal de videos random\",\r\n    \"createdTime\": \"2023-01-01T23:36:17.306Z\",\r\n    \"videos\": [\r\n        {\r\n            \"id\": \"21856\",\r\n            \"name\": \"Alien: Isolation live on iOS - 1/9/2023, 10:17:06 PM\",\r\n            \"description\": \"HOW WILL YOU SURVIVE? Discover the true meaning of fear in Alien: Isolation, a survival horror set in an atmosphere of constant dread and mortal danger.\",\r\n            \"releaseTime\": \"2023-01-09T22:32:41.126Z\",\r\n            \"comments\": [{\r\n                    \"id\": \"3955\",\r\n                    \"text\": \"Funniest video I've ever seen\",\r\n                    \"createdOn\": \"2023-01-03T23:45:40.196Z\"\r\n                }],\r\n            \"captions\": [\r\n                {\r\n                    \"id\": \"1\",\r\n                    \"name\": \"/lazy-static/video-captions/68efe0a2-8ed8-4a6d-831a-ab8f5fc8f7fc-cy.vtt\",\r\n                    \"language\": \"Spanish\"\r\n                }\r\n            ],\r\n            \"user\": {\r\n                \"name\": \"stux\",\r\n                \"user_link\": \"https://peertube.tv/accounts/stux\",\r\n                \"picture_link\": \"https://peertube.tv/lazy-static/avatars/f8463b3f-2e2e-4f36-8bd3-fa9c0ef4f463.png\"\r\n            }\r\n        },\r\n        {\r\n            \"id\": \"21855\",\r\n            \"name\": \"Alien: Isolation live on iOS - 1/9/2023, 9:51:45 PM\",\r\n            \"description\": \"HOW WILL YOU SURVIVE? Discover the true meaning of fear in Alien: Isolation, a survival horror set in an atmosphere of constant dread and mortal danger.\",\r\n            \"releaseTime\": \"2023-01-09T22:21:23.816Z\",\r\n            \"comments\": [],\r\n            \"captions\": [\r\n                {\r\n                    \"id\": \"2\",\r\n                    \"name\": \"/lazy-static/video-captions/b62fe117-7ae9-4214-975c-33558d1d71eb-cy.vtt\",\r\n                    \"language\": \"Welsh\"\r\n                }\r\n            ],\r\n            \"user\": {\r\n                \"name\": \"stux\",\r\n                \"user_link\": \"https://peertube.tv/accounts/stux\",\r\n                \"picture_link\": \"https://peertube.tv/lazy-static/avatars/f8463b3f-2e2e-4f36-8bd3-fa9c0ef4f463.png\"\r\n            }\r\n        },\r\n        {\r\n            \"id\": \"6032\",\r\n            \"name\": \"Pickle-Kim\",\r\n            \"description\": \"It's not super sad though\",\r\n            \"releaseTime\": \"2023-01-02T17:26:13.298Z\",\r\n            \"comments\": [\r\n                {\r\n                    \"id\": \"3956\",\r\n                    \"text\": \"Funniest shit I've ever seen\",\r\n                    \"createdOn\": \"2023-01-03T23:45:40.196Z\"\r\n                }\r\n            ],\r\n            \"captions\": [\r\n                {\r\n                    \"id\": \"3\",\r\n                    \"name\": \"/lazy-static/video-captions/f688d53c-323a-4d9b-851d-9d9b4a743532-ko.vtt\",\r\n                    \"language\": \"Korean\"\r\n                }\r\n            ],\r\n            \"user\": {\r\n                \"name\": \"stux\",\r\n                \"user_link\": \"https://peertube.tv/accounts/stux\",\r\n                \"picture_link\": \"https://peertube.tv/lazy-static/avatars/f8463b3f-2e2e-4f36-8bd3-fa9c0ef4f463.png\"\r\n            }\r\n        },\r\n        {\r\n            \"id\": \"6014\",\r\n            \"name\": \"High on Life Game\",\r\n            \"description\": \"Sounds familiar doesn’t it?\",\r\n            \"releaseTime\": \"2023-01-02T17:13:29.238Z\",\r\n            \"comments\": [],\r\n            \"captions\": [\r\n                {\r\n                    \"id\": \"4\",\r\n                    \"name\": \"/lazy-static/video-captions/1ee4a3c5-fb0b-4cd7-b4c9-b902cb41eb74-en.vtt\",\r\n                    \"language\": \"English\"\r\n                }\r\n            ],\r\n            \"user\": {\r\n                \"name\": \"stux\",\r\n                \"user_link\": \"https://peertube.tv/accounts/stux\",\r\n                \"picture_link\": \"https://peertube.tv/lazy-static/avatars/f8463b3f-2e2e-4f36-8bd3-fa9c0ef4f463.png\"\r\n            }\r\n        },\r\n        {\r\n            \"id\": \"5638\",\r\n            \"name\": \"The brain plan\",\r\n            \"description\": null,\r\n            \"releaseTime\": \"2023-01-02T11:26:57.201Z\",\r\n            \"comments\": [],\r\n            \"captions\": [\r\n                {\r\n                    \"id\": \"5\",\r\n                    \"name\": \"/lazy-static/video-captions/1118903d-f760-4230-aea9-edf40a8bb7b1-en.vtt\",\r\n                    \"language\": \"English\"\r\n                }\r\n            ],\r\n            \"user\": {\r\n                \"name\": \"stux\",\r\n                \"user_link\": \"https://peertube.tv/accounts/stux\",\r\n                \"picture_link\": \"https://peertube.tv/lazy-static/avatars/f8463b3f-2e2e-4f36-8bd3-fa9c0ef4f463.png\"\r\n            }\r\n        },\r\n        {\r\n            \"id\": \"5404\",\r\n            \"name\": \"The News, in 480p, bloopers and lol!\",\r\n            \"description\": \"A good way to test uploads.\",\r\n            \"releaseTime\": \"2023-01-02T10:43:48.160Z\",\r\n            \"comments\": [],\r\n            \"captions\": [\r\n                {\r\n                    \"id\": \"6\",\r\n                    \"name\": \"/lazy-static/video-captions/8309b1ff-361b-424d-9132-2a505712533c-en.vtt\",\r\n                    \"language\": \"English\"\r\n                }\r\n            ],\r\n            \"user\": {\r\n                \"name\": \"stux\",\r\n                \"user_link\": \"https://peertube.tv/accounts/stux\",\r\n                \"picture_link\": \"https://peertube.tv/lazy-static/avatars/f8463b3f-2e2e-4f36-8bd3-fa9c0ef4f463.png\"\r\n            }\r\n        },\r\n        {\r\n            \"id\": \"5368\",\r\n            \"name\": \"The Internet\",\r\n            \"description\": null,\r\n            \"releaseTime\": \"2023-01-02T10:41:12.558Z\",\r\n            \"comments\": [],\r\n            \"captions\": [\r\n                {\r\n                    \"id\": \"7\",\r\n                    \"name\": \"/lazy-static/video-captions/e6528ccd-3b21-4e06-a735-6be54858521d-en.vtt\",\r\n                    \"language\": \"English\"\r\n                }\r\n            ],\r\n            \"user\": {\r\n                \"name\": \"stux\",\r\n                \"user_link\": \"https://peertube.tv/accounts/stux\",\r\n                \"picture_link\": \"https://peertube.tv/lazy-static/avatars/f8463b3f-2e2e-4f36-8bd3-fa9c0ef4f463.png\"\r\n            }\r\n        },\r\n        {\r\n            \"id\": \"5326\",\r\n            \"name\": \"A beautiful timelapse\",\r\n            \"description\": \"Found somewhere on the web!\",\r\n            \"releaseTime\": \"2023-01-02T10:38:40.879Z\",\r\n            \"comments\": [],\r\n            \"captions\": [],\r\n            \"user\": {\r\n                \"name\": \"stux\",\r\n                \"user_link\": \"https://peertube.tv/accounts/stux\",\r\n                \"picture_link\": \"https://peertube.tv/lazy-static/avatars/f8463b3f-2e2e-4f36-8bd3-fa9c0ef4f463.png\"\r\n            }\r\n        }\r\n    ]\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/videominer/channels",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "videominer",
+            "channels"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get all channels",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "var jsonData = pm.response.json();\r",
+              "\r",
+              "\r",
+              "pm.test(\"Returned response has only one element\", () => { pm.expect(jsonData.length).to.equal(1); })\r",
+              "pm.test(\"id property should have specific value\", () => { pm.expect(jsonData[0][\"id\"]).to.include(\"80\"); })"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/videominer/channels",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "videominer",
+            "channels"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get channel",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", () => { pm.response.to.have.status(200); });\r",
+              "\r",
+              "var jsonData = pm.response.json();\r",
+              "\r",
+              "pm.test(\"id property should have specific value\", () => { pm.expect(jsonData[\"id\"]).to.include(\"80\"); })"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/videominer/channels/:id",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "videominer",
+            "channels",
+            ":id"
+          ],
+          "variable": [
+            {
+              "key": "id",
+              "value": "80"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get all videos",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", () => { pm.response.to.have.status(200); });\r",
+              "\r",
+              "var jsonData = pm.response.json();\r",
+              "pm.test(\"Returned response has 8 elements\", () => { pm.expect(jsonData.length).to.equal(8); })"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/videominer/videos",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "videominer",
+            "videos"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get video",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", () => { pm.response.to.have.status(200); });\r",
+              "\r",
+              "var jsonData = pm.response.json();\r",
+              "\r",
+              "pm.test(\"id property should have specific value\", () => { pm.expect(jsonData[\"id\"]).to.include(\"21856\"); })"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/videominer/videos/:id",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "videominer",
+            "videos",
+            ":id"
+          ],
+          "variable": [
+            {
+              "key": "id",
+              "value": "21856"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get all captions",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", () => { pm.response.to.have.status(200); });\r",
+              "\r",
+              "var jsonData = pm.response.json();\r",
+              "pm.test(\"Returned response has 8 elements\", () => { pm.expect(jsonData.length).to.equal(8); })"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/videominer/captions",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "videominer",
+            "captions"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get caption",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", () => { pm.response.to.have.status(200); });\r",
+              "\r",
+              "var jsonData = pm.response.json();\r",
+              "\r",
+              "pm.test(\"id property should have specific value\", () => { pm.expect(jsonData[\"id\"]).to.include(\"1\"); })"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/videominer/captions/:id",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "videominer",
+            "captions",
+            ":id"
+          ],
+          "variable": [
+            {
+              "key": "id",
+              "value": "1"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get all comments",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", () => { pm.response.to.have.status(200); });\r",
+              "\r",
+              "var jsonData = pm.response.json();\r",
+              "pm.test(\"Returned response has 2 elements\", () => { pm.expect(jsonData.length).to.equal(2); })"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/videominer/comments",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "videominer",
+            "comments"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get comment",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", () => { pm.response.to.have.status(200); });\r",
+              "\r",
+              "var jsonData = pm.response.json();\r",
+              "\r",
+              "pm.test(\"id property should have specific value\", () => { pm.expect(jsonData[\"id\"]).to.include(\"3956\"); })"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/videominer/comments/:id",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "videominer",
+            "comments",
+            ":id"
+          ],
+          "variable": [
+            {
+              "key": "id",
+              "value": "3956"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
