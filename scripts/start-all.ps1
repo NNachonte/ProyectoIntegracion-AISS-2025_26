@@ -7,7 +7,8 @@ $pidFile = Join-Path $root ".service-pids.json"
 $services = @(
     @{ Name = "VideoMiner"; Path = (Join-Path $root "VideoMiner") },
     @{ Name = "DailyMotionMiner"; Path = (Join-Path $root "DailyMotionMiner") },
-    @{ Name = "PeerTubeMiner"; Path = (Join-Path $root "PeerTubeMiner") }
+    @{ Name = "PeerTubeMiner"; Path = (Join-Path $root "PeerTubeMiner") },
+    @{ Name = "TwitchMiner"; Path = (Join-Path $root "TwitchMiner") }
 )
 
 New-Item -ItemType Directory -Force -Path $logDir | Out-Null

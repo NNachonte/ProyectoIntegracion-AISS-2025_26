@@ -123,3 +123,61 @@ Servicios especializados en la extracción de datos (ETL).
 1. **Clonar el repositorio:**
    ```bash
    git clone [https://github.com/NNachonte/ProyectoIntegracion-AISS-2025_26.git](https://github.com/NNachonte/ProyectoIntegracion-AISS-2025_26.git)
+```
+
+---
+
+## TwitchMiner
+
+`TwitchMiner` es un microservicio Spring Boot que consume la API de Twitch (Helix) para buscar canales, vídeos y enriquecer datos con clips.
+
+### Obtener credenciales de Twitch
+
+1. Accede a https://dev.twitch.tv/console y regístrate/inicia sesión.
+2. Ve a **Applications → Register Your Application** y crea una nueva aplicación:
+    - Application Name: `TwitchMiner` (o el que prefieras)
+    - OAuth Redirect URL: `http://localhost:8083`
+    - Application Category: `Application Integration`
+3. Copia el `Client ID` y genera el `Client Secret` (se muestra solo una vez).
+
+### Obtener App Access Token
+
+Ejecuta (reemplaza CLIENT_ID y CLIENT_SECRET):
+
+Linux/Mac/WSL:
+```bash
+curl -X POST https://id.twitch.tv/oauth2/token \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  -d "client_id=CLIENT_ID_HERE" \
+  -d "client_secret=CLIENT_SECRET_HERE" \
+  -d "grant_type=client_credentials"
+```
+
+PowerShell:
+```powershell
+$body = @{ client_id = "CLIENT_ID_HERE"; client_secret = "CLIENT_SECRET_HERE"; grant_type = "client_credentials" } | ConvertTo-Json
+Invoke-WebRequest -Uri https://id.twitch.tv/oauth2/token -Method POST -ContentType "application/json" -Body $body | Select-Object -ExpandProperty Content | ConvertFrom-Json
+```
+
+Del JSON resultante copia el valor de `access_token`.
+
+### Guardar credenciales (recomendado)
+
+Linux/Mac/WSL (añadir a `~/.bashrc` o `~/.zshrc`):
+```bash
+export TWITCH_CLIENT_ID="your_client_id_here"
+export TWITCH_TOKEN="your_access_token_here"
+source ~/.bashrc
+```
+
+Windows PowerShell (User):
+```powershell
+[Environment]::SetEnvironmentVariable("TWITCH_CLIENT_ID","your_client_id_here","User")
+[Environment]::SetEnvironmentVariable("TWITCH_TOKEN","your_access_token_here","User")
+```
+
+### Verificación
+
+1. Inicia la aplicación `TwitchMiner`.
+2. Importa `postman-collection-miners.json` en Postman y ejecuta la colección `TwitchMiner`.
+3. Si las peticiones devuelven respuestas válidas, la configuración es correcta.

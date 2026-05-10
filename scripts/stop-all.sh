@@ -30,15 +30,17 @@ kill_by_pattern_windows() {
   fi
 
   cmd.exe /c "\"$PSH\" -NoProfile -Command \"\$root='$root_win'; \$repo=Split-Path -Leaf \$root; \$targets=@('VideoMiner','DailyMotionMiner','PeerTubeMiner'); \$procs=Get-CimInstance -ClassName Win32_Process -ErrorAction SilentlyContinue; foreach (\$p in \$procs) { if (-not \$p.CommandLine) { continue }; if (\$p.CommandLine -notlike ('*' + \$repo + '*')) { continue }; if (\$p.CommandLine -notlike '*spring-boot:run*') { continue }; foreach (\$t in \$targets) { if (\$p.CommandLine -like ('*' + \$t + '*')) { Stop-Process -Id \$p.ProcessId -Force -ErrorAction SilentlyContinue; break } } }\"" > /dev/null 2>&1 || true
-  cmd.exe /c "\"$PSH\" -NoProfile -Command \"\$ports=@(8080,8081,8082); \$pids=(Get-NetTCPConnection -LocalPort \$ports -State Listen -ErrorAction SilentlyContinue | Select-Object -ExpandProperty OwningProcess) | Select-Object -Unique; foreach (\$pid in \$pids) { Stop-Process -Id \$pid -Force -ErrorAction SilentlyContinue }\"" > /dev/null 2>&1 || true
-  cmd.exe /c "for %%p in (8080 8081 8082) do for /f \"tokens=5\" %%i in ('netstat -ano ^| findstr :%%p ^| findstr LISTENING') do taskkill /PID %%i /T /F >nul 2>&1" > /dev/null 2>&1 || true
+  cmd.exe /c "\"$PSH\" -NoProfile -Command "\$root='$root_win'; \$repo=Split-Path -Leaf \$root; \$targets=@('VideoMiner','DailyMotionMiner','PeerTubeMiner','TwitchMiner'); \$procs=Get-CimInstance -ClassName Win32_Process -ErrorAction SilentlyContinue; foreach (\$p in \$procs) { if (-not \$p.CommandLine) { continue }; if (\$p.CommandLine -notlike ('*' + \$repo + '*')) { continue }; if (\$p.CommandLine -notlike '*spring-boot:run*') { continue }; foreach (\$t in \$targets) { if (\$p.CommandLine -like ('*' + \$t + '*')) { Stop-Process -Id \$p.ProcessId -Force -ErrorAction SilentlyContinue; break } } }\"" > /dev/null 2>&1 || true
+  cmd.exe /c "\"$PSH\" -NoProfile -Command "\$ports=@(8080,8081,8082,8083); \$pids=(Get-NetTCPConnection -LocalPort \$ports -State Listen -ErrorAction SilentlyContinue | Select-Object -ExpandProperty OwningProcess) | Select-Object -Unique; foreach (\$pid in \$pids) { Stop-Process -Id \$pid -Force -ErrorAction SilentlyContinue }\"" > /dev/null 2>&1 || true
+  cmd.exe /c "for %%p in (8080 8081 8082 8083) do for /f \"tokens=5\" %%i in ('netstat -ano ^| findstr :%%p ^| findstr LISTENING') do taskkill /PID %%i /T /F >nul 2>&1" > /dev/null 2>&1 || true
 }
 
 kill_by_pattern_unix() {
   local repo_name
   repo_name="$(basename "$ROOT")"
   pkill -f "${repo_name}.*/(VideoMiner|DailyMotionMiner|PeerTubeMiner).*spring-boot:run" 2>/dev/null || true
-  for port in 8080 8081 8082; do
+  pkill -f "${repo_name}.*/(TwitchMiner).*spring-boot:run" 2>/dev/null || true
+  for port in 8080 8081 8082 8083; do
     pid="$(lsof -ti tcp:"$port" 2>/dev/null || true)"
     if [[ -n "$pid" ]]; then
       kill -9 $pid 2>/dev/null || true

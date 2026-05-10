@@ -12,6 +12,7 @@ type nul > "%PID_FILE%"
 call :startService VideoMiner
 call :startService DailyMotionMiner
 call :startService PeerTubeMiner
+call :startService TwitchMiner
 
 echo Started services. PIDs saved to %PID_FILE%
 echo Logs: %LOG_DIR%
