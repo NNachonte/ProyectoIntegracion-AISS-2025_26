@@ -1,0 +1,429 @@
+{
+  "info": {
+    "_postman_id": "7f8b52a9-5b31-4e28-9d8a-1d8f1a8b3b4f",
+    "name": "AISS Test Suite",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "dm_base",
+      "value": "http://localhost:8081/dailymotion"
+    },
+    {
+      "key": "pt_base",
+      "value": "http://localhost:8082/peertube"
+    },
+    {
+      "key": "vm_base",
+      "value": "http://localhost:8080/videominer"
+    }
+  ],
+  "item": [
+    {
+      "name": "DailyMotionMiner",
+      "item": [
+        {
+          "name": "DM - Get channel OK",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{dm_base}}/channels/people"
+          },
+          "response": []
+        },
+        {
+          "name": "DM - Get channel Not Found",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 404 or 502\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([404, 502]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{dm_base}}/channels/this_channel_should_not_exist_123"
+          },
+          "response": []
+        },
+        {
+          "name": "DM - Method Not Allowed",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 405\", function () {",
+                  "    pm.response.to.have.status(405);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": "{{dm_base}}/channels/people"
+          },
+          "response": []
+        },
+        {
+          "name": "DM - Not Acceptable",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 406\", function () {",
+                  "    pm.response.to.have.status(406);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/xml"
+              }
+            ],
+            "url": "{{dm_base}}/channels/people"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "PeerTubeMiner",
+      "item": [
+        {
+          "name": "PT - Get channels OK",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{pt_base}}/channels"
+          },
+          "response": []
+        },
+        {
+          "name": "PT - Get channel Not Found",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 404 or 502\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([404, 502]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{pt_base}}/channels/this_channel_should_not_exist_123"
+          },
+          "response": []
+        },
+        {
+          "name": "PT - Method Not Allowed",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 405\", function () {",
+                  "    pm.response.to.have.status(405);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": "{{pt_base}}/channels/tv"
+          },
+          "response": []
+        },
+        {
+          "name": "PT - Not Acceptable",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 406\", function () {",
+                  "    pm.response.to.have.status(406);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/xml"
+              }
+            ],
+            "url": "{{pt_base}}/channels"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "VideoMiner",
+      "item": [
+        {
+          "name": "VM - Create channel OK",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"test-{{$randomInt}}\",\n  \"name\": \"Test Channel\",\n  \"description\": \"Channel created by Postman tests\",\n  \"createdTime\": \"2026-05-06T10:00:00Z\",\n  \"videos\": []\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{vm_base}}/channels"
+          },
+          "response": []
+        },
+        {
+          "name": "VM - Validation error",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"bad-{{$randomInt}}\",\n  \"name\": \"\",\n  \"createdTime\": \"\",\n  \"videos\": null\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{vm_base}}/channels"
+          },
+          "response": []
+        },
+        {
+          "name": "VM - Malformed JSON",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"id\": \"bad\", \"name\": \"oops\", }"
+            },
+            "url": "{{vm_base}}/channels"
+          },
+          "response": []
+        },
+        {
+          "name": "VM - Unsupported Media Type",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 415\", function () {",
+                  "    pm.response.to.have.status(415);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "text/plain"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "hello"
+            },
+            "url": "{{vm_base}}/channels"
+          },
+          "response": []
+        },
+        {
+          "name": "VM - Not Acceptable",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 406\", function () {",
+                  "    pm.response.to.have.status(406);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/xml"
+              }
+            ],
+            "url": "{{vm_base}}/channels"
+          },
+          "response": []
+        },
+        {
+          "name": "VM - Method Not Allowed",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 405\", function () {",
+                  "    pm.response.to.have.status(405);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": "{{vm_base}}/channels"
+          },
+          "response": []
+        },
+        {
+          "name": "VM - Get channel Not Found",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 404\", function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{vm_base}}/channels/this_channel_should_not_exist_123"
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

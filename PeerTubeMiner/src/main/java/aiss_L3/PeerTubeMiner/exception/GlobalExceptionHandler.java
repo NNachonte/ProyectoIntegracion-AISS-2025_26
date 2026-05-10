@@ -1,4 +1,6 @@
-package aiss_L3.DailyMotionMiner.exception;
+package aiss_L3.PeerTubeMiner.exception;
+
+import java.time.Instant;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,10 +15,9 @@ import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
-import java.time.Instant;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
@@ -32,11 +33,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return problemDetail;
     }
 
-    @ExceptionHandler(DailyMotionApiException.class)
-    public ProblemDetail handleDailyMotionApiException(DailyMotionApiException ex) {
+    @ExceptionHandler(PeerTubeApiException.class)
+    public ProblemDetail handlePeerTubeApiException(PeerTubeApiException ex) {
         log.error("API Error: {}", ex.getMessage());
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_GATEWAY, ex.getMessage());
-        problemDetail.setTitle("DailyMotion API Exception");
+        problemDetail.setTitle("PeerTube API Exception");
         problemDetail.setProperty("timestamp", Instant.now());
         return problemDetail;
     }

@@ -41,8 +41,6 @@ public class Transformer {
 
         Channel channel = new Channel();
 
-        // En PeerTube, los endpoints /video-channels/{id} suelen esperar el "name" (handle),
-        // no el ID numérico interno. Usamos name como identificador estable.
         channel.setId(ptChannel.getName() != null ? ptChannel.getName() : (ptChannel.getId() != null ? String.valueOf(ptChannel.getId()) : null));
         channel.setName(ptChannel.getDisplayName());
         channel.setDescription(ptChannel.getDescription());
@@ -58,10 +56,6 @@ public class Transformer {
 
         User user = new User();
 
-        // IMPORTANTE (persistencia en VideoMiner):
-        // VideoMiner usa IDs autogenerados para User. Si enviamos un id fijo (p.ej. 3)
-        // para muchos vídeos, JPA intentará insertar duplicados y el POST fallará.
-        // Dejarlo a null permite que VideoMiner genere IDs únicos.
         user.setId(null);
         user.setName(ptAccount.getName());
         user.setUser_link(ptAccount.getUrl());
@@ -76,9 +70,6 @@ public class Transformer {
 
         Caption caption = new Caption();
 
-        // IMPORTANTE (persistencia en VideoMiner):
-        // En el modelo, Caption.id es la PK. Si usamos solo el language id ("en"),
-        // colisiona entre vídeos. Hacemos el id único por vídeo.
         String langId = ptCaption.getLanguage().getId();
         String safeVideoId = videoId != null ? videoId : "video";
         caption.setId(safeVideoId + "_" + langId);
@@ -95,7 +86,6 @@ public class Transformer {
 
         Comment comment = new Comment();
 
-        // Hacemos el id único por vídeo para evitar colisiones entre vídeos/canales.
         String safeVideoId = videoId != null ? videoId : "video";
         comment.setId(safeVideoId + "_" + ptComment.getId());
         comment.setText(ptComment.getText());

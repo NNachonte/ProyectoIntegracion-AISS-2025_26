@@ -1,0 +1,56 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ----------------------< aiss_L3:DailyMotionMiner >----------------------
+[INFO] Building  0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot:3.5.13:run (default-cli) > test-compile @ DailyMotionMiner >>>
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ DailyMotionMiner ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] Copying 0 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ DailyMotionMiner ---
+[INFO] Recompiling the module because of added or removed source files.
+[INFO] Compiling 25 source files with javac [debug parameters release 21] to target/classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ DailyMotionMiner ---
+[INFO] skip non existing resourceDirectory /mnt/c/Users/Arve/Documents/Apuntes Uni/AISS-2º/Integración/Proyecto/Ws-Proyecto/ProyectoIntegracion-AISS-2025_26/DailyMotionMiner/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ DailyMotionMiner ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 4 source files with javac [debug parameters release 21] to target/test-classes
+[WARNING] /mnt/c/Users/Arve/Documents/Apuntes Uni/AISS-2º/Integración/Proyecto/Ws-Proyecto/ProyectoIntegracion-AISS-2025_26/DailyMotionMiner/src/test/java/aiss_L3/DailyMotionMiner/ChannelControllerWebTest.java:[24,6] org.springframework.boot.test.mock.mockito.MockBean in org.springframework.boot.test.mock.mockito has been deprecated and marked for removal
+[INFO] 
+[INFO] <<< spring-boot:3.5.13:run (default-cli) < test-compile @ DailyMotionMiner <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:3.5.13:run (default-cli) @ DailyMotionMiner ---
+[INFO] Attaching agents: []
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.13)
+
+2026-05-07T13:46:04.929+02:00  INFO 1795 --- [DailyMotionMiner] [           main] a.D.DailyMotionMinerApplication          : Starting DailyMotionMinerApplication using Java 21.0.10 with PID 1795 (/mnt/c/Users/Arve/Documents/Apuntes Uni/AISS-2º/Integración/Proyecto/Ws-Proyecto/ProyectoIntegracion-AISS-2025_26/DailyMotionMiner/target/classes started by arve in /mnt/c/Users/Arve/Documents/Apuntes Uni/AISS-2º/Integración/Proyecto/Ws-Proyecto/ProyectoIntegracion-AISS-2025_26/DailyMotionMiner)
+2026-05-07T13:46:04.938+02:00  INFO 1795 --- [DailyMotionMiner] [           main] a.D.DailyMotionMinerApplication          : No active profile set, falling back to 1 default profile: "default"
+2026-05-07T13:46:11.243+02:00  INFO 1795 --- [DailyMotionMiner] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8081 (http)
+2026-05-07T13:46:11.311+02:00  INFO 1795 --- [DailyMotionMiner] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-05-07T13:46:11.313+02:00  INFO 1795 --- [DailyMotionMiner] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.53]
+2026-05-07T13:46:11.502+02:00  INFO 1795 --- [DailyMotionMiner] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-05-07T13:46:11.504+02:00  INFO 1795 --- [DailyMotionMiner] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 6403 ms
+2026-05-07T13:46:14.384+02:00  INFO 1795 --- [DailyMotionMiner] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8081 (http) with context path '/'
+2026-05-07T13:46:14.395+02:00  INFO 1795 --- [DailyMotionMiner] [           main] a.D.DailyMotionMinerApplication          : Started DailyMotionMinerApplication in 11.902 seconds (process running for 13.104)
+2026-05-07T13:46:14.404+02:00  WARN 1795 --- [DailyMotionMiner] [           main] o.s.core.events.SpringDocAppInitializer  : SpringDoc /v3/api-docs endpoint is enabled by default. To disable it in production, set the property 'springdoc.api-docs.enabled=false'
+2026-05-07T13:46:14.414+02:00  WARN 1795 --- [DailyMotionMiner] [           main] o.s.core.events.SpringDocAppInitializer  : SpringDoc /swagger-ui.html endpoint is enabled by default. To disable it in production, set the property 'springdoc.swagger-ui.enabled=false'
+2026-05-07T13:46:15.997+02:00  INFO 1795 --- [DailyMotionMiner] [nio-8081-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-05-07T13:46:15.998+02:00  INFO 1795 --- [DailyMotionMiner] [nio-8081-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-05-07T13:46:16.000+02:00  INFO 1795 --- [DailyMotionMiner] [nio-8081-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2026-05-07T13:46:43.662+02:00  INFO 1795 --- [DailyMotionMiner] [ionShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2026-05-07T13:46:43.672+02:00  INFO 1795 --- [DailyMotionMiner] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
