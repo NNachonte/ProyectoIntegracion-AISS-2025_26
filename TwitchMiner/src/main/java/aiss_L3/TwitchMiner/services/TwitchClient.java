@@ -8,6 +8,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import aiss_L3.TwitchMiner.exception.TwitchApiException;
@@ -27,8 +28,17 @@ public class TwitchClient {
     public <T> T get(String url, Class<T> responseType) {
         validateCredentials();
         HttpEntity<Void> entity = new HttpEntity<>(buildHeaders());
-        ResponseEntity<T> response = restTemplate.exchange(url, HttpMethod.GET, entity, responseType);
-        return response.getBody();
+        try {
+            ResponseEntity<T> response = restTemplate.exchange(url, HttpMethod.GET, entity, responseType);
+            return response.getBody();
+        } catch (HttpClientErrorException e) {
+            // When Twitch API returns 400 Bad Request (invalid ID), return null
+            if (e.getStatusCode() != null && e.getStatusCode().value() == 400) {
+                return null;
+            }
+            // For other HTTP client errors, wrap and rethrow as TwitchApiException
+            throw new TwitchApiException("Twitch API returned error: " + e.getStatusCode() + " - " + e.getMessage(), e);
+        }
     }
 
     private HttpHeaders buildHeaders() {

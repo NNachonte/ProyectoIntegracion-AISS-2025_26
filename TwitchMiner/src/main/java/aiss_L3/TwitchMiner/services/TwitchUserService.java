@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.util.UriUtils;
 
 import aiss_L3.TwitchMiner.model.twitch.TwitchUser;
@@ -24,16 +25,32 @@ public class TwitchUserService {
         if (!StringUtils.hasText(id)) return null;
         String encoded = UriUtils.encodeQueryParam(id, StandardCharsets.UTF_8);
         String url = baseUrl + "/users?id=" + encoded;
-        TwitchUserResponse response = twitchClient.get(url, TwitchUserResponse.class);
-        return firstUser(response);
+        try {
+            TwitchUserResponse response = twitchClient.get(url, TwitchUserResponse.class);
+            return firstUser(response);
+        } catch (HttpClientErrorException e) {
+            if (e.getStatusCode() != null && e.getStatusCode().value() == 400 && e.getMessage() != null
+                    && e.getMessage().contains("Bad Identifiers")) {
+                return null;
+            }
+            throw e;
+        }
     }
 
     public TwitchUser getUserByLogin(String login) {
         if (!StringUtils.hasText(login)) return null;
         String encoded = UriUtils.encodeQueryParam(login, StandardCharsets.UTF_8);
         String url = baseUrl + "/users?login=" + encoded;
-        TwitchUserResponse response = twitchClient.get(url, TwitchUserResponse.class);
-        return firstUser(response);
+        try {
+            TwitchUserResponse response = twitchClient.get(url, TwitchUserResponse.class);
+            return firstUser(response);
+        } catch (HttpClientErrorException e) {
+            if (e.getStatusCode() != null && e.getStatusCode().value() == 400 && e.getMessage() != null
+                    && e.getMessage().contains("Bad Identifiers")) {
+                return null;
+            }
+            throw e;
+        }
     }
 
     public TwitchUser getUserByIdOrLogin(String value) {

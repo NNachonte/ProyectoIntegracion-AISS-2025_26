@@ -18,9 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException;
 
 import aiss_L3.TwitchMiner.model.videominer.Channel;
 import aiss_L3.TwitchMiner.services.ChannelService;
+import aiss_L3.TwitchMiner.exception.ResourceNotFoundException;
 
 @Tag(name = "Twitch Channels", description = "Twitch channel mining API")
 @RestController
@@ -72,7 +74,15 @@ public class ChannelController {
             @PathVariable("id") String id,
             @Parameter(description = "Maximum number of videos to mine. Default: 10", required = false)
             @RequestParam(value = "maxVideos", required = false, defaultValue = "10") Integer maxVideos) {
-        return channelService.getChannelById(id, maxVideos);
+        try {
+            return channelService.getChannelById(id, maxVideos);
+        } catch (HttpClientErrorException e) {
+            if (e.getStatusCode() != null && e.getStatusCode().value() == 400
+                    && e.getMessage() != null && e.getMessage().contains("Bad Identifiers")) {
+                throw new ResourceNotFoundException("Channel not found on Twitch: " + id);
+            }
+            throw e;
+        }
     }
 
     @PostMapping("/{id}")
@@ -97,6 +107,14 @@ public class ChannelController {
             @PathVariable("id") String id,
             @Parameter(description = "Maximum number of videos to mine. Default: 10", required = false)
             @RequestParam(value = "maxVideos", defaultValue = "10") Integer maxVideos) {
-        return channelService.postChannel(id, maxVideos);
+                try {
+                        return channelService.postChannel(id, maxVideos);
+                } catch (HttpClientErrorException e) {
+                        if (e.getStatusCode() != null && e.getStatusCode().value() == 400
+                                        && e.getMessage() != null && e.getMessage().contains("Bad Identifiers")) {
+                                throw new ResourceNotFoundException("Channel not found on Twitch: " + id);
+                        }
+                        throw e;
+                }
     }
 }
