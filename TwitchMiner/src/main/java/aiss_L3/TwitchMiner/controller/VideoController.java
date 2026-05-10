@@ -2,6 +2,13 @@ package aiss_L3.TwitchMiner.controller;
 
 import java.util.List;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import aiss_L3.TwitchMiner.model.videominer.Video;
 import aiss_L3.TwitchMiner.services.VideoService;
 
+@Tag(name = "Twitch Videos", description = "Twitch video mining API")
 @RestController
 @RequestMapping("/twitch/videos")
 public class VideoController {
@@ -20,14 +28,45 @@ public class VideoController {
     private VideoService videoService;
 
     @GetMapping
+    @Operation(tags = {"get", "videos"}, summary = "Get Twitch videos", description = "Returns videos obtained from Twitch.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Videos retrieved successfully", content = {
+                    @Content(schema = @Schema(implementation = Video.class), mediaType = "application/json")
+            }),
+            @ApiResponse(responseCode = "502", description = "Error returned by the Twitch API", content = {
+                    @Content(schema = @Schema())
+            }),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = {
+                    @Content(schema = @Schema())
+            })
+    })
     public List<Video> getVideos(
+            @Parameter(description = "Search query for Twitch videos. Uses the configured default when omitted.", required = false)
             @RequestParam(value = "query", required = false) String query,
+            @Parameter(description = "Maximum number of videos to mine. Default: 10", required = false)
             @RequestParam(value = "maxResults", required = false, defaultValue = "10") Integer maxResults) {
         return videoService.getVideos(query, maxResults);
     }
 
     @GetMapping("/{id}")
-    public Video getVideoById(@PathVariable("id") String id) {
+    @Operation(tags = {"get", "videos"}, summary = "Get Twitch video by ID", description = "Returns a Twitch video using its identifier.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Video retrieved successfully", content = {
+                    @Content(schema = @Schema(implementation = Video.class), mediaType = "application/json")
+            }),
+            @ApiResponse(responseCode = "404", description = "Video not found", content = {
+                    @Content(schema = @Schema())
+            }),
+            @ApiResponse(responseCode = "502", description = "Error returned by the Twitch API", content = {
+                    @Content(schema = @Schema())
+            }),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = {
+                    @Content(schema = @Schema())
+            })
+    })
+    public Video getVideoById(
+            @Parameter(description = "Twitch video identifier", required = true)
+            @PathVariable("id") String id) {
         return videoService.getVideoById(id);
     }
 }
