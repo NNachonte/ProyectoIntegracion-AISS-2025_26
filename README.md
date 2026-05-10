@@ -166,11 +166,9 @@ Los logs se guardan en la carpeta `logs/` y los PIDs en `.service-pids.txt`.
 ## Instalación y Uso
 
 1. **Clonar el repositorio:**
-   ```bash
-   git clone [https://github.com/NNachonte/ProyectoIntegracion-AISS-2025_26.git](https://github.com/NNachonte/ProyectoIntegracion-AISS-2025_26.git)
-<<<<<<< HEAD
-=======
-```
+  ```bash
+  git clone https://github.com/NNachonte/ProyectoIntegracion-AISS-2025_26.git
+  ```
 
 ---
 
@@ -228,4 +226,4 @@ Windows PowerShell (User):
 1. Inicia la aplicación `TwitchMiner`.
 2. Importa `postman-collection-miners.json` en Postman y ejecuta la colección `TwitchMiner`.
 3. Si las peticiones devuelven respuestas válidas, la configuración es correcta.
->>>>>>> 495dc4d (Ordenado repositorio)
+
