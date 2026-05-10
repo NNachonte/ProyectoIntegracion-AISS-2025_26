@@ -1,11 +1,19 @@
 package aiss_L3.VideoMiner.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "Channel")
@@ -13,10 +21,11 @@ public class Channel {
 
     @Id
     @JsonProperty("id")
+    @NotEmpty(message = "El ID del canal no puede estar vacío")
     private String id;
 
     @JsonProperty("name")
-    
+    @NotEmpty(message = "El nombre del canal no puede estar vacío")
     private String name;
 
     @JsonProperty("description")
@@ -24,7 +33,7 @@ public class Channel {
     private String description;
 
     @JsonProperty("createdTime")
-    
+    @NotEmpty(message = "La fecha de creación no puede estar vacía")
     private String createdTime;
 
     @JsonProperty("videos")
