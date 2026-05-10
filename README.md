@@ -1,4 +1,4 @@
-content = """# VideoMiner: Integrated Video Aggregator
+#  VideoMiner: Integrated Video Aggregator
 
 ![Java](https://img.shields.io/badge/Java-21-orange?style=flat-square&logo=java)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5.13-brightgreen?style=flat-square&logo=springboot)
