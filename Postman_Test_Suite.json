@@ -17,6 +17,11 @@
       "key": "vm_base",
       "value": "http://localhost:8080/videominer"
     }
+    ,
+    {
+      "key": "tw_base",
+      "value": "http://localhost:8083/twitch"
+    }
   ],
   "item": [
     {
@@ -420,6 +425,127 @@
             "method": "GET",
             "header": [],
             "url": "{{vm_base}}/channels/this_channel_should_not_exist_123"
+          },
+          "response": []
+        }
+      ]
+    }
+    ,
+    {
+      "name": "TwitchMiner",
+      "item": [
+        {
+          "name": "TW - Get channels OK",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{tw_base}}/channels?query=Twitch"
+          },
+          "response": []
+        },
+        {
+          "name": "TW - Get videos OK",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{tw_base}}/videos?query=Twitch"
+          },
+          "response": []
+        },
+        {
+          "name": "TW - Get channel Not Found",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 404 or 502\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([404, 502]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{tw_base}}/channels/this_channel_should_not_exist_123"
+          },
+          "response": []
+        },
+        {
+          "name": "TW - Method Not Allowed",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 405\", function () {",
+                  "    pm.response.to.have.status(405);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": "{{tw_base}}/channels"
+          },
+          "response": []
+        },
+        {
+          "name": "TW - Not Acceptable",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 406\", function () {",
+                  "    pm.response.to.have.status(406);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/xml"
+              }
+            ],
+            "url": "{{tw_base}}/channels"
           },
           "response": []
         }
