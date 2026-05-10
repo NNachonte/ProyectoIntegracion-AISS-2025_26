@@ -1,4 +1,4 @@
-package aiss_L3.PeerTubeMiner.config;
+package aiss_L3.TwitchMiner.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,5 +10,4 @@ public class RestTemplateConfig {
     public org.springframework.web.client.RestTemplate restTemplate() {
         return new org.springframework.web.client.RestTemplate();
     }
-    
 }
