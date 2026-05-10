@@ -27,7 +27,7 @@ public class ApiKeyFilter implements Filter {
         HttpServletResponse res = (HttpServletResponse) response;
         String path = req.getRequestURI();
 
-        if (path.contains("/swagger") ||  path.contains("/h2-console") || path.contains("/v3/api-docs")) {
+        if (path.contains("/swagger-ui") ||  path.contains("/h2-console") || path.contains("/v3/api-docs")) {
             chain.doFilter(request, response);
             return;
         }
