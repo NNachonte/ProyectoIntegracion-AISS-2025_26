@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClientException;
@@ -30,6 +34,9 @@ public class ChannelService {
 
     @Autowired
     VideoService videoService;
+
+    @Value("${videominer.api.key}")
+    private String videoMinerToken;
 
     public List<Channel> getChannels() {
         String url = "https://peertube.tv/api/v1/video-channels?count=10";
@@ -124,14 +131,23 @@ public class ChannelService {
 
     private Channel sendChannelToVideoMiner(Channel channel) {
         try {
-            String videoMinerUrl = "http://localhost:8080/videominer/channels";
-            System.out.println("Enviando canal a VideoMiner: " + channel.getName());
+        String videoMinerUrl = "http://localhost:8080/videominer/channels";
+        System.out.println("Enviando canal a VideoMiner: " + channel.getName());
 
-            Channel createdInVideoMiner = restTemplate.postForObject(videoMinerUrl, channel, Channel.class);
-            return createdInVideoMiner != null ? createdInVideoMiner : channel;
-        } catch (RestClientException e) {
-            throw new PeerTubeApiException("Unexpected error communicating with VideoMiner", e);
-        }
+        HttpHeaders headers = new HttpHeaders();
+        
+        headers.set("X-API-KEY", videoMinerToken); 
+        
+        HttpEntity<Channel> request = new HttpEntity<>(channel, headers);
+
+        ResponseEntity<Channel> response = restTemplate.postForEntity(videoMinerUrl, request, Channel.class);
+        
+        return response.getBody() != null ? response.getBody() : channel;
+
+    } catch (RestClientException e) {
+        System.err.println("Error en la petición: " + e.getMessage());
+        throw new PeerTubeApiException("Unexpected error communicating with VideoMiner", e);
+    }
     }
 
 }

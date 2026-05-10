@@ -6,6 +6,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestClientException;
@@ -47,6 +50,9 @@ public class ChannelService {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    @Value("${videominer.api.key}")
+    private String videoMinerToken;
 
     public List<Channel> getChannels(String query, Integer maxResults) {
         int limit = (maxResults != null && maxResults > 0) ? maxResults : DEFAULT_MAX_CHANNELS;
@@ -95,18 +101,30 @@ public class ChannelService {
 
     public Channel postChannel(String idOrLogin, Integer maxVideos) {
         Channel channel = getChannelById(idOrLogin, maxVideos);
-
         String videoMinerUrl = "http://localhost:8080/videominer/channels";
+
         try {
+            HttpHeaders headers = new HttpHeaders();
+        
+        
+            headers.set("X-API-KEY", videoMinerToken); 
+        
+
+        
+            HttpEntity<Channel> request = new HttpEntity<>(channel, headers);
+
             System.out.println("Posting channel to VideoMiner: " + videoMinerUrl);
-            System.out.println("Channel data: " + channel);
-            Channel result = restTemplate.postForObject(videoMinerUrl, channel, Channel.class);
+        
+        
+            ResponseEntity<Channel> response = restTemplate.postForEntity(videoMinerUrl, request, Channel.class);
+        
             System.out.println("Successfully posted channel to VideoMiner");
-            return result;
+            return response.getBody();
+
         } catch (RestClientException e) {
             System.err.println("Failed to post channel to VideoMiner: " + e.getMessage());
-            e.printStackTrace();
             throw new TwitchApiException("Error posting channel to VideoMiner: " + e.getMessage(), e);
         }
+        
     }
 }

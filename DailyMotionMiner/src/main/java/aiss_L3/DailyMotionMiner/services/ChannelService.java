@@ -1,5 +1,23 @@
 package aiss_L3.DailyMotionMiner.services;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
+
 import aiss_L3.DailyMotionMiner.etl.Transformer;
 import aiss_L3.DailyMotionMiner.exception.DailyMotionApiException;
 import aiss_L3.DailyMotionMiner.exception.ResourceNotFoundException;
@@ -9,19 +27,6 @@ import aiss_L3.DailyMotionMiner.model.dailymotion.VideoDM;
 import aiss_L3.DailyMotionMiner.model.dailymotion.VideoSearchDM;
 import aiss_L3.DailyMotionMiner.model.videominer.Channel;
 import aiss_L3.DailyMotionMiner.model.videominer.Video;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.HttpServerErrorException;
-import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.RestTemplate;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 @Service
 public class ChannelService {
@@ -36,6 +41,9 @@ public class ChannelService {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    @Value("${videominer.api.key}")
+    private String videoMinerToken;
 
     private final String baseUrl = "https://api.dailymotion.com";
     private final String channelFields = "id,name,description,created_time";
@@ -131,6 +139,21 @@ public class ChannelService {
         Channel channel = getChannelById(id, maxVideos, maxPages);
 
         String videoMinerUrl = "http://localhost:8080/videominer/channels";
-        return restTemplate.postForObject(videoMinerUrl, channel, Channel.class);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("X-API-KEY", videoMinerToken);
+
+        
+        HttpEntity<Channel> request = new HttpEntity<>(channel, headers);
+
+        
+        ResponseEntity<Channel> response = restTemplate.postForEntity(
+                videoMinerUrl, 
+                request, 
+                Channel.class
+        );
+
+        
+        return response.getBody();
     }
 }
