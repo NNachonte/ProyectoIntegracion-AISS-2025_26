@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpEntity; // NUEVO
+import org.springframework.http.HttpHeaders; // NUEVO
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
@@ -20,6 +22,11 @@ public class ChannelTest {
         // URL de tu API en local
         String url = "http://localhost:8080/videominer/channels";
         RestTemplate restTemplate = new RestTemplate();
+
+        // --- NUEVO: PREPARAMOS LA CABECERA CON TU CLAVE ---
+        HttpHeaders headers = new HttpHeaders();
+        // OJO: Pon aquí exactamente la misma clave que pusiste en application.properties
+        headers.set("X-API-KEY", "clave123"); 
 
         System.out.println("Comenzando a insertar canales de prueba...");
 
@@ -71,8 +78,11 @@ public class ChannelTest {
             channel.setVideos(videos);
 
             try {
-                // Enviamos el POST
-                ResponseEntity<Channel> response = restTemplate.postForEntity(url, channel, Channel.class);
+                // --- NUEVO: EMPAQUETAMOS EL CANAL Y LA CABECERA JUNTOS ---
+                HttpEntity<Channel> requestEntity = new HttpEntity<>(channel, headers);
+
+                // Enviamos el POST usando el requestEntity en lugar del channel a pelo
+                ResponseEntity<Channel> response = restTemplate.postForEntity(url, requestEntity, Channel.class);
                 System.out.println("✅ Canal " + i + " insertado correctamente. Status: " + response.getStatusCode());
             } catch (RestClientException e) {
                 System.err.println("❌ Error al insertar el canal " + i + ": " + e.getMessage());

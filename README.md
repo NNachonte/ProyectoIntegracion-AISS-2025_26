@@ -1,4 +1,4 @@
-#  VideoMiner: Integrated Video Aggregator
+content = """# VideoMiner: Integrated Video Aggregator
 
 ![Java](https://img.shields.io/badge/Java-21-orange?style=flat-square&logo=java)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5.13-brightgreen?style=flat-square&logo=springboot)
@@ -17,7 +17,7 @@ Este proyecto es un sistema de integración de servicios de vídeo desarrollado 
 
 ---
 
-##  Arquitectura del Sistema
+## Arquitectura del Sistema
 
 El sistema se divide en tres microservicios principales:
 
@@ -27,7 +27,23 @@ El sistema se divide en tres microservicios principales:
 
 ---
 
-##  API Endpoints
+## Seguridad y Autenticación (API Key)
+
+El microservicio principal (**VideoMiner**) está protegido mediante un sistema de clave única (API Key) para garantizar que solo los clientes y Miners autorizados puedan consultar o insertar datos.
+
+* **Cabecera requerida:** Todas las peticiones HTTP a los endpoints protegidos (canales, vídeos, comentarios, etc.) deben incluir una cabecera llamada `X-API-KEY`.
+* **Configuración:** La clave maestra se define en el archivo `src/main/resources/application.properties` del proyecto VideoMiner, usando la propiedad:
+    ```properties
+    videominer.api.key=clave123
+    ```
+* **Excepciones:** Las rutas de documentación interactiva (`/swagger-ui`, `/v3/api-docs`) y la consola de la base de datos H2 (`/h2-console`) son de acceso público para facilitar el desarrollo y la evaluación.
+
+> **💡 Nota para pruebas (Postman):**
+> Para probar los endpoints de VideoMiner, ve a la pestaña **Headers** de tu petición, añade `X-API-KEY` en la columna *Key*, y el valor de tu `application.properties` en la columna *Value*.
+
+---
+
+## API Endpoints
 
 A continuación se detallan las operaciones mínimas para la comunicación entre módulos y el acceso del cliente.
 
@@ -37,8 +53,8 @@ A continuación se detallan las operaciones mínimas para la comunicación entre
 | DailyMotionMiner | `http://localhost:8081/dailymotion` |
 | PeerTubeMiner | `http://localhost:8082/peertube` |
 
-###  VideoMiner (API)
-Es el núcleo del sistema. Recibe los datos de los miners y sirve la información al cliente. Estos son los recursos y sus endpoints:
+### VideoMiner (API)
+Es el núcleo del sistema. Recibe los datos de los miners y sirve la información al cliente. Estos son los recursos y sus endpoints *(Recuerda usar la cabecera `X-API-KEY`)*:
 
 #### Canales
 
@@ -46,21 +62,21 @@ Es el núcleo del sistema. Recibe los datos de los miners y sirve la informació
 | :--- | :--- | :--- |
 | `POST` | `/channels` | **Recolección:** Recibe canales de los miners y los guarda. (Usado internamente). |
 | `GET` | `/channels` | Lista los canales almacenados. |
-| `GET` | `/channels/{id}` | Muestra los detalles del canal especificado por su id |
+| `GET` | `/channels/{id}` | Muestra los detalles del canal especificado por su id. |
 
 #### Vídeos
 
 | Método | Endpoint | Descripción |
 | :--- | :--- | :--- |
 | `GET` | `/videos` | Lista los vídeos almacenados. |
-| `GET` | `/videos/{id}` | Muestra los detalles del vídeo especificado por su id |
+| `GET` | `/videos/{id}` | Muestra los detalles del vídeo especificado por su id. |
 
 #### Comentarios
 
 | Método | Endpoint | Descripción |
 | :--- | :--- | :--- |
-| `GET` | `/comments` | Lista los comentarios almacenados |
-| `GET` | `/comments/{id}` | Muestra los detalles del comentario especificado por su id |
+| `GET` | `/comments` | Lista los comentarios almacenados. |
+| `GET` | `/comments/{id}` | Muestra los detalles del comentario especificado por su id. |
 | `GET` | `/videos/{videoId}/comments` | Muestra los detalles de los comentarios del vídeo especificado por su id. |
 
 
@@ -68,25 +84,22 @@ Es el núcleo del sistema. Recibe los datos de los miners y sirve la informació
 
 | Método | Endpoint | Descripción |
 | :--- | :--- | :--- |
-| `GET` | `/captions` | Lista los subtítulos almacenados |
-| `GET` | `/captions/{id}` | Muestra los detalles de los subtítulos especificados por su id |
+| `GET` | `/captions` | Lista los subtítulos almacenados. |
+| `GET` | `/captions/{id}` | Muestra los detalles de los subtítulos especificados por su id. |
 | `GET` | `/videos/{videoId}/captions` | Muestra los detalles de los subtítulos del vídeo especificado por su id. |
 
 
-###  Miners (PeerTube & DailyMotion)
+### Miners (PeerTube & DailyMotion)
 Servicios especializados en la extracción de datos (ETL).   
 
 | Método | Endpoint | Descripción |
 | :--- | :--- | :--- |
 | `POST` | `/channels/{id}` | Inicia una búsqueda en la plataforma y envía el canal seleccionado a VideoMiner, que lo guarda. |
+
 #### Parámetros opcionales
-`maxVideos`: La operación devolverá el número de vídeos por canal introducido como parámetro. Valor por defecto: 10.
-
-`maxComments`: Solo usable con PeerTubeMiner. La operación devolverá el número de comentarios por video introducido como parámetro. Valor por defecto: 2.
-
-`maxPages`: Solo usable con DailyMotionMiner. Número máximo de páginas de resultados a devolver. Valor por defecto: 2.
-
-
+* `maxVideos`: La operación devolverá el número de vídeos por canal introducido como parámetro. Valor por defecto: 10.
+* `maxComments`: Solo usable con PeerTubeMiner. La operación devolverá el número de comentarios por video introducido como parámetro. Valor por defecto: 2.
+* `maxPages`: Solo usable con DailyMotionMiner. Número máximo de páginas de resultados a devolver. Valor por defecto: 2.
 
 | Método | Endpoint | Descripción |
 | :--- | :--- | :--- |
@@ -97,57 +110,16 @@ Servicios especializados en la extracción de datos (ETL).
 
 ---
 
-##  Tecnologías Utilizadas
+## Tecnologías Utilizadas
 
-*   **Framework:** Spring Boot 3.5.13
-*   **Gestión de Dependencias:** Maven
-*   **Comunicación:** REST (RestTemplate / WebClient)
-*   **Documentación API:** Swagger / OpenAPI 
-*   **Base de Datos:** H2 / JPA Hibernate
+* **Framework:** Spring Boot 3.5.13
+* **Gestión de Dependencias:** Maven
+* **Comunicación:** REST (RestTemplate / WebClient)
+* **Documentación API:** Swagger / OpenAPI 
+* **Base de Datos:** H2 / JPA Hibernate
 
-##  Instalación y Uso
+## Instalación y Uso
 
 1. **Clonar el repositorio:**
    ```bash
    git clone [https://github.com/NNachonte/ProyectoIntegracion-AISS-2025_26.git](https://github.com/NNachonte/ProyectoIntegracion-AISS-2025_26.git)
-
-##  Inicio y parada de servicios
-
-El proyecto incluye lanzadores por sistema operativo para evitar depender de `npm` como punto de entrada.
-
-Asegúrate de que estás en la **carpeta raíz** del proyecto al ejecutar los scripts. Y ten paciencia al iniciar, tarda unos **20 segundos** hasta que responde a las peticiones.
-
-### Windows
-
-Desde la raiz del repositorio puedes usar los scripts `.cmd`:
-
-```powershell
-.\scripts\start-all.cmd
-.\scripts\stop-all.cmd
-```
-
-### Linux / macOS
-
-Puedes usar los scripts `.sh` desde Bash, WSL, Git Bash o una terminal Unix compatible:
-
-```bash
-./scripts/start-all.sh
-./scripts/stop-all.sh
-```
-
-### Comando legado con npm
-
-Si prefieres seguir usando `npm`, los scripts antiguos siguen disponibles como envoltorio:
-
-```bash
-npm run start:all
-npm run stop:all
-```
-
-Los logs se guardan en la carpeta `logs/` y los PIDs en `.service-pids.txt`.
-
-### Notas
-
-- En Windows, los `.cmd` delegan en PowerShell.
-- En Linux/macOS, los `.sh` usan Maven Wrapper y `bash`.
-- Si ejecutas los `.sh` desde Windows, usa WSL o Git Bash.
