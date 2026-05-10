@@ -4,6 +4,13 @@ $root = Split-Path -Parent $PSScriptRoot
 $logDir = Join-Path $root "logs"
 $pidFile = Join-Path $root ".service-pids.json"
 
+if (-not $env:JAVA_HOME) {
+    $javaHomeLine = (& java -XshowSettings:properties -version 2>&1 | Select-String '^\s*java\.home = ' | Select-Object -First 1).ToString()
+    if ($javaHomeLine -match 'java\.home = (.+)$') {
+        $env:JAVA_HOME = $Matches[1].Trim()
+    }
+}
+
 $services = @(
     @{ Name = "VideoMiner"; Path = (Join-Path $root "VideoMiner") },
     @{ Name = "DailyMotionMiner"; Path = (Join-Path $root "DailyMotionMiner") },

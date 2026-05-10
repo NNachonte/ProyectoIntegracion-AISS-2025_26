@@ -5,6 +5,10 @@ set "ROOT=%~dp0.."
 set "LOG_DIR=%ROOT%\logs"
 set "PID_FILE=%ROOT%\.service-pids.txt"
 
+if not defined JAVA_HOME (
+  for /f "usebackq delims=" %%i in (`powershell -NoProfile -Command "$line = (& java -XshowSettings:properties -version 2^>^&1 ^| Select-String '^\\s*java\\.home = ' ^| Select-Object -First 1).ToString(); if ($line -match 'java\\.home = (.+)$') { $Matches[1].Trim() }"`) do set "JAVA_HOME=%%i"
+)
+
 if not exist "%LOG_DIR%" mkdir "%LOG_DIR%"
 if exist "%PID_FILE%" del /f /q "%PID_FILE%"
 type nul > "%PID_FILE%"
