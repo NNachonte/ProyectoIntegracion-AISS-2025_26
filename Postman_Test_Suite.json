@@ -21,6 +21,10 @@
     {
       "key": "tw_base",
       "value": "http://localhost:8083/twitch"
+    },
+    {
+      "key": "vm_api_key",
+      "value": "clave123"
     }
   ],
   "item": [
@@ -244,6 +248,10 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-API-KEY",
+                "value": "{{vm_api_key}}"
               }
             ],
             "body": {
@@ -280,6 +288,10 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-API-KEY",
+                "value": "{{vm_api_key}}"
               }
             ],
             "body": {
@@ -316,6 +328,10 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-API-KEY",
+                "value": "{{vm_api_key}}"
               }
             ],
             "body": {
@@ -347,6 +363,10 @@
               {
                 "key": "Content-Type",
                 "value": "text/plain"
+              },
+              {
+                "key": "X-API-KEY",
+                "value": "{{vm_api_key}}"
               }
             ],
             "body": {
@@ -376,6 +396,10 @@
             "method": "GET",
             "header": [
               {
+                "key": "X-API-KEY",
+                "value": "{{vm_api_key}}"
+              },
+              {
                 "key": "Accept",
                 "value": "text/xml"
               }
@@ -401,7 +425,12 @@
           ],
           "request": {
             "method": "PUT",
-            "header": [],
+            "header": [
+              {
+                "key": "X-API-KEY",
+                "value": "{{vm_api_key}}"
+              }
+            ],
             "url": "{{vm_base}}/channels"
           },
           "response": []
@@ -423,7 +452,12 @@
           ],
           "request": {
             "method": "GET",
-            "header": [],
+            "header": [
+              {
+                "key": "X-API-KEY",
+                "value": "{{vm_api_key}}"
+              }
+            ],
             "url": "{{vm_base}}/channels/this_channel_should_not_exist_123"
           },
           "response": []
