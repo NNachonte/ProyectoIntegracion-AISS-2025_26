@@ -118,6 +118,47 @@ Servicios especializados en la extracción de datos (ETL).
 * **Documentación API:** Swagger / OpenAPI 
 * **Base de Datos:** H2 / JPA Hibernate
 
+##  Inicio y parada de servicios
+
+El proyecto incluye lanzadores por sistema operativo para evitar depender de `npm` como punto de entrada.
+
+Asegúrate de que estás en la **carpeta raíz** del proyecto al ejecutar los scripts. Y ten paciencia al iniciar, tarda unos **20 segundos** hasta que responde a las peticiones.
+
+### Windows
+
+Desde la raiz del repositorio puedes usar los scripts `.cmd`:
+
+```powershell
+.\scripts\start-all.cmd
+.\scripts\stop-all.cmd
+```
+
+### Linux / macOS
+
+Puedes usar los scripts `.sh` desde Bash, WSL, Git Bash o una terminal Unix compatible:
+
+```bash
+./scripts/start-all.sh
+./scripts/stop-all.sh
+```
+
+### Comando legado con npm
+
+Si prefieres seguir usando `npm`, los scripts antiguos siguen disponibles como envoltorio:
+
+```bash
+npm run start:all
+npm run stop:all
+```
+
+Los logs se guardan en la carpeta `logs/` y los PIDs en `.service-pids.txt`.
+
+### Notas
+
+- En Windows, los `.cmd` delegan en PowerShell.
+- En Linux/macOS, los `.sh` usan Maven Wrapper y `bash`.
+- Si ejecutas los `.sh` desde Windows, usa WSL o Git Bash.
+
 ## Instalación y Uso
 
 1. **Clonar el repositorio:**
