@@ -15,6 +15,8 @@ Este proyecto es un sistema de integración de servicios de vídeo desarrollado 
 
 **PeerTube:** http://localhost:8082/swagger-ui/index.html
 
+**Twitch:** http://localhost:8083/swagger-ui/index.html
+
 ---
 
 ## Arquitectura del Sistema
@@ -23,7 +25,8 @@ El sistema se divide en tres microservicios principales:
 
 1.  **PeerTube Miner:** Extrae y normaliza datos de instancias de PeerTube.
 2.  **DailyMotion Miner:** Extrae y normaliza datos de instancias de DailyMotion.
-3.  **VideoMiner (Core):** Actúa como agregador y almacén central de datos, exponiendo una API unificada para el cliente.
+3.  **Twitch Miner:** Extrae y normaliza datos de instancias de Twitch.
+4.  **VideoMiner (Core):** Actúa como agregador y almacén central de datos, exponiendo una API unificada para el cliente.
 
 ---
 
@@ -52,6 +55,7 @@ A continuación se detallan las operaciones mínimas para la comunicación entre
 | VideoMiner | `http://localhost:8080/videominer` |
 | DailyMotionMiner | `http://localhost:8081/dailymotion` |
 | PeerTubeMiner | `http://localhost:8082/peertube` |
+| TwitchMiner | `http://localhost:8083/twitch` |
 
 ### VideoMiner (API)
 Es el núcleo del sistema. Recibe los datos de los miners y sirve la información al cliente. Estos son los recursos y sus endpoints *(Recuerda usar la cabecera `X-API-KEY`)*:
