@@ -1,4 +1,4 @@
-#  VideoMiner: Integrated Video Aggregator
+#  VideoMiner: Integrated Video Aggregator
 
 ![Java](https://img.shields.io/badge/Java-21-orange?style=flat-square&logo=java)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5.13-brightgreen?style=flat-square&logo=springboot)
@@ -23,10 +23,10 @@ Este proyecto es un sistema de integración de servicios de vídeo desarrollado 
 
 El sistema se divide en tres microservicios principales:
 
-1.  **PeerTube Miner:** Extrae y normaliza datos de instancias de PeerTube.
-2.  **DailyMotion Miner:** Extrae y normaliza datos de instancias de DailyMotion.
-3.  **Twitch Miner:** Extrae y normaliza datos de instancias de Twitch.
-4.  **VideoMiner (Core):** Actúa como agregador y almacén central de datos, exponiendo una API unificada para el cliente.
+1.  **PeerTube Miner:** Extrae y normaliza datos de instancias de PeerTube.
+2.  **DailyMotion Miner:** Extrae y normaliza datos de instancias de DailyMotion.
+3.  **Twitch Miner:** Extrae y normaliza datos de instancias de Twitch.
+4.  **VideoMiner (Core):** Actúa como agregador y almacén central de datos, exponiendo una API unificada para el cliente.
 
 ---
 
@@ -36,9 +36,9 @@ El microservicio principal (**VideoMiner**) está protegido mediante un sistema 
 
 * **Cabecera requerida:** Todas las peticiones HTTP a los endpoints protegidos (canales, vídeos, comentarios, etc.) deben incluir una cabecera llamada `X-API-KEY`.
 * **Configuración:** La clave maestra se define en el archivo `src/main/resources/application.properties` del proyecto VideoMiner, usando la propiedad:
-    ```properties
-    videominer.api.key=clave123
-    ```
+    ```properties
+    videominer.api.key=clave123
+    ```
 * **Excepciones:** Las rutas de documentación interactiva (`/swagger-ui`, `/v3/api-docs`) y la consola de la base de datos H2 (`/h2-console`) son de acceso público para facilitar el desarrollo y la evaluación.
 
 > **💡 Nota para pruebas (Postman):**
@@ -60,41 +60,51 @@ A continuación se detallan las operaciones mínimas para la comunicación entre
 ### VideoMiner (API)
 Es el núcleo del sistema. Recibe los datos de los miners y sirve la información al cliente. Estos son los recursos y sus endpoints *(Recuerda usar la cabecera `X-API-KEY`)*:
 
+#### Paginación, Filtrado y Ordenación Avanzada
+
+Los endpoints `GET` que devuelven listas de elementos en **VideoMiner** soportan parámetros de consulta (query parameters) en la URL para controlar el volumen de datos devueltos:
+
+* **`limit`**: Define el número máximo de elementos a devolver por página. (Ejemplo: `?limit=10`).
+* **`offset`**: Define el número de elementos a omitir antes de empezar a recolectar el conjunto de resultados. Se usa en combinación con `limit` para navegar entre páginas. (Ejemplo: `?limit=10&offset=20` devolverá de los elementos 21 al 30).
+* **Filtrado de datos**: Es posible filtrar resultados especificando atributos directos en la petición, como nombres o títulos. (Ejemplo: `?name=Auronplay` o `?title=Minecraft`).
+* **Ordenación (`order`)**: Define el criterio de ordenación de los resultados. Se puede preceder de un símbolo menos (`-`) para indicar un orden descendente, o un símbolo más (`+`) para indicar orden ascendente. (Ejemplo: `?order=-name` ordenará por nombre de la Z a la A).
+
+> **Ejemplo de petición combinada:**
+> `GET http://localhost:8080/videominer/channels?name=AISS&limit=5&offset=10&order=name`
+
 #### Canales
 
 | Método | Endpoint | Descripción |
 | :--- | :--- | :--- |
 | `POST` | `/channels` | **Recolección:** Recibe canales de los miners y los guarda. (Usado internamente). |
-| `GET` | `/channels` | Lista los canales almacenados. |
+| `GET` | `/channels` | Lista los canales almacenados (Soporta `limit`, `offset`, `order` y filtros). |
 | `GET` | `/channels/{id}` | Muestra los detalles del canal especificado por su id. |
 
 #### Vídeos
 
 | Método | Endpoint | Descripción |
 | :--- | :--- | :--- |
-| `GET` | `/videos` | Lista los vídeos almacenados. |
+| `GET` | `/videos` | Lista los vídeos almacenados (Soporta `limit`, `offset`, `order` y filtros). |
 | `GET` | `/videos/{id}` | Muestra los detalles del vídeo especificado por su id. |
 
 #### Comentarios
 
 | Método | Endpoint | Descripción |
 | :--- | :--- | :--- |
-| `GET` | `/comments` | Lista los comentarios almacenados. |
+| `GET` | `/comments` | Lista los comentarios almacenados (Soporta `limit`, `offset`, `order` y filtros). |
 | `GET` | `/comments/{id}` | Muestra los detalles del comentario especificado por su id. |
 | `GET` | `/videos/{videoId}/comments` | Muestra los detalles de los comentarios del vídeo especificado por su id. |
-
 
 #### Subtítulos
 
 | Método | Endpoint | Descripción |
 | :--- | :--- | :--- |
-| `GET` | `/captions` | Lista los subtítulos almacenados. |
+| `GET` | `/captions` | Lista los subtítulos almacenados (Soporta `limit`, `offset`, `order` y filtros). |
 | `GET` | `/captions/{id}` | Muestra los detalles de los subtítulos especificados por su id. |
 | `GET` | `/videos/{videoId}/captions` | Muestra los detalles de los subtítulos del vídeo especificado por su id. |
 
-
-### Miners (PeerTube & DailyMotion)
-Servicios especializados en la extracción de datos (ETL).   
+### Miners (PeerTube, DailyMotion & Twitch)
+Servicios especializados en la extracción de datos (ETL).   
 
 | Método | Endpoint | Descripción |
 | :--- | :--- | :--- |
@@ -122,7 +132,7 @@ Servicios especializados en la extracción de datos (ETL).
 * **Documentación API:** Swagger / OpenAPI 
 * **Base de Datos:** H2 / JPA Hibernate
 
-##  Inicio y parada de servicios
+##  Inicio y parada de servicios
 
 El proyecto incluye lanzadores por sistema operativo para evitar depender de `npm` como punto de entrada.
 
@@ -226,4 +236,3 @@ Windows PowerShell (User):
 1. Inicia la aplicación `TwitchMiner`.
 2. Importa `postman-collection-miners.json` en Postman y ejecuta la colección `TwitchMiner`.
 3. Si las peticiones devuelven respuestas válidas, la configuración es correcta.
-
