@@ -1,51 +1,89 @@
 # TwitchMiner 🚀
 
-Este proyecto es un servicio de Spring Boot configurado para interactuar con la API de Twitch. Sigue estos pasos para configurar tus credenciales de forma permanente en el sistema.
+Proyecto Spring Boot que consume la **API de Twitch Helix** para buscar canales y vídeos, y enriquecer los detalles con clips como comentarios.
 
-## 📋 Configuración Inicial Única
+## 🔑 Obtener Credenciales de Twitch
 
-Realizaremos los pasos para obtener todos los datos antes de guardarlos definitivamente.
+### 1. Crear una Aplicación en Twitch
+1. Accede a [Twitch Developer Console](https://dev.twitch.tv/console)
+2. Inicia sesión con tu cuenta de Twitch
+3. Ve a **Applications** → **Register Your Application**
+4. Rellena los datos:
+   - **Application Name**: `TwitchMiner` (o el que prefieras)
+   - **OAuth Redirect URL**: `http://localhost:8083`
+   - **Application Category**: `Application Integration`
+   - Acepta los términos y crea la aplicación
+5. Copia el **Client ID** (se mostrará en la página de aplicación)
 
-### 1. Obtención de Client ID y Secret
-1. Entra en el [Twitch Developer Console](https://dev.twitch.tv/console).
-2. Registra tu aplicación (Redirect URL: `http://localhost:8083`).
-3. Copia el **Client ID**.
-4. Genera y guarda un **Client Secret** (⚠️ Solo se muestra una vez).
+### 2. Generar Client Secret
+1. En la página de la aplicación, haz clic en **Manage**
+2. Ve a la pestaña **OAuth** o copia desde el panel principal
+3. Haz clic en **Generate** junto a **Client Secret**
+4. ⚠️ **Copia inmediatamente** el Client Secret (solo se muestra una vez)
 
-### 2. Obtención del Access Token
-Sin cerrar la terminal, ejecuta el siguiente comando sustituyendo tus datos reales (esto nos dará el token necesario para las llamadas a la API):
+### 3. Obtener Access Token (App Access Token)
+Ejecuta este comando en tu terminal, sustituyendo `CLIENT_ID` y `CLIENT_SECRET`:
 
+**Linux/Mac/WSL:**
 ```bash
-curl -X POST 'https://id.twitch.tv/oauth2/token' \
--H 'Content-Type: application/x-www-form-urlencoded' \
--d "client_id=TU_CLIENT_ID_AQUI" \
--d "client_secret=TU_CLIENT_SECRET_AQUI" \
+curl -X POST https://id.twitch.tv/oauth2/token \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  -d "client_id=CLIENT_ID_HERE" \
+  -d "client_secret=CLIENT_SECRET_HERE" \
+  -d "grant_type=client_credentials"
 ```
 
-De la respuesta JSON, copia el valor de `"access_token"`.
+**Windows PowerShell:**
+```powershell
+$body = @{
+    client_id = "CLIENT_ID_HERE"
+    client_secret = "CLIENT_SECRET_HERE"
+    grant_type = "client_credentials"
+} | ConvertTo-Json
 
-### 3. Configuración Permanente (Nano)
-Ahora que tienes los tres datos (ID, Secret y Token), vamos a guardarlos en tu perfil de usuario para que no se borren nunca:
+Invoke-WebRequest -Uri https://id.twitch.tv/oauth2/token `
+  -Method POST `
+  -ContentType "application/json" `
+  -Body $body | Select-Object -ExpandProperty Content | ConvertFrom-Json
+```
 
-1. Abre el archivo de configuración:
-   - En Linux/WSL: `nano ~/.bashrc`
-   - En Mac: `nano ~/.zshrc`
+Del resultado JSON, copia el valor de `access_token`.
 
-2. Ve al final del archivo y pega estas tres líneas con tus datos:
-   export TWITCH_CLIENT_ID="tu_client_id_aqui"
-   export TWITCH_CLIENT_SECRET="tu_client_secret_aqui"
-   export TWITCH_TOKEN="tu_access_token_aqui"
+## 💾 Guardar Credenciales de Forma Permanente
 
-3. Guarda y sal: Presiona `Ctrl + O`, luego `Enter` para confirmar, y finalmente `Ctrl + X` para salir.
+### Variables de Entorno (Recomendado)
 
-4. Actualiza tu terminal actual:
-    `source ~/.bashr`  (o `source ~/.zshrc`)
+**Linux/Mac/WSL:**
+```bash
+# Abre el archivo de configuración
+nano ~/.bashrc  # o ~/.zshrc en Mac
+
+# Al final, añade estas líneas:
+export TWITCH_CLIENT_ID="your_client_id_here"
+export TWITCH_TOKEN="your_access_token_here"
+
+# Guarda (Ctrl+O, Enter, Ctrl+X) y recarga:
+source ~/.bashrc  # o source ~/.zshrc
+```
+
+**Windows PowerShell (Permanente):**
+```powershell
+# Ejecuta como Administrador
+[Environment]::SetEnvironmentVariable("TWITCH_CLIENT_ID", "your_client_id_here", "User")
+[Environment]::SetEnvironmentVariable("TWITCH_TOKEN", "your_access_token_here", "User")
+
+# Cierra y reabre PowerShell para que los cambios tengan efecto
+# Verifica:
+Write-Output $env:TWITCH_CLIENT_ID
+Write-Output $env:TWITCH_TOKEN
+```
 
 ---
 
 ## ✅ Verificación y Tests
+
 Para confirmar que la configuración es correcta:
 
 1. Inicia la aplicación.
-2. Realiza los tests de TwitchMiner importando el archivo [postman-collection-miners.json](postman-collection-miners.json) en Postman.
-3. Ejecuta la colección; **si no devuelve ningún error, es que la configuración se ha realizado correctamente.** :)
+2. Realiza los tests de TwitchMiner importando el archivo `postman-collection-miners.json` en Postman.
+3. Ejecuta la colección; si no devuelve ningún error, es que la configuración se ha realizado correctamente. :)

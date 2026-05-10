@@ -98,9 +98,15 @@ public class ChannelService {
 
         String videoMinerUrl = "http://localhost:8080/videominer/channels";
         try {
-            return restTemplate.postForObject(videoMinerUrl, channel, Channel.class);
+            System.out.println("Posting channel to VideoMiner: " + videoMinerUrl);
+            System.out.println("Channel data: " + channel);
+            Channel result = restTemplate.postForObject(videoMinerUrl, channel, Channel.class);
+            System.out.println("Successfully posted channel to VideoMiner");
+            return result;
         } catch (RestClientException e) {
-            throw new TwitchApiException("Error posting channel to VideoMiner", e);
+            System.err.println("Failed to post channel to VideoMiner: " + e.getMessage());
+            e.printStackTrace();
+            throw new TwitchApiException("Error posting channel to VideoMiner: " + e.getMessage(), e);
         }
     }
 }

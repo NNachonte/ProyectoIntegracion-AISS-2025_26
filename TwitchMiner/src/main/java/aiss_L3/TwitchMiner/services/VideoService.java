@@ -39,6 +39,9 @@ public class VideoService {
     @Autowired
     private TwitchUserService twitchUserService;
 
+    @Autowired
+    private TwitchClipsService twitchClipsService;
+
     public List<Video> getVideos(String query, Integer maxResults) {
         int limit = (maxResults != null && maxResults > 0) ? maxResults : DEFAULT_MAX_VIDEOS;
         String safeQuery = StringUtils.hasText(query) ? query : defaultQuery;
@@ -81,7 +84,18 @@ public class VideoService {
 
         TwitchVideo twitchVideo = response.getData().get(0);
         TwitchUser user = twitchUserService.getUserById(twitchVideo.getUserId());
-        return transformer.transformVideo(twitchVideo, user);
+        Video video = transformer.transformVideo(twitchVideo, user);
+
+        // Enrich video detail with clips as comments
+        if (video != null && StringUtils.hasText(twitchVideo.getUserId())) {
+            try {
+                video.setComments(twitchClipsService.getClipsAsComments(twitchVideo.getUserId(), id, 5));
+            } catch (Exception e) {
+                System.err.println("Warning: Could not fetch clips for video " + id + ": " + e.getMessage());
+            }
+        }
+
+        return video;
     }
 
     public List<Video> getVideosByUserId(String userId, Integer maxVideos, TwitchUser user) {
@@ -103,6 +117,12 @@ public class VideoService {
             for (TwitchVideo twitchVideo : response.getData()) {
                 Video video = transformer.transformVideo(twitchVideo, user);
                 if (video != null) {
+                    // Enrich each video with clips as comments
+                    try {
+                        video.setComments(twitchClipsService.getClipsAsComments(userId, twitchVideo.getId(), 5));
+                    } catch (Exception e) {
+                        System.err.println("Warning: Could not fetch clips for video " + twitchVideo.getId() + ": " + e.getMessage());
+                    }
                     videos.add(video);
                 }
             }

@@ -26,7 +26,6 @@ public class Video {
     private String id;
 
     @JsonProperty("name")
-    @NotEmpty(message = "Video name cannot be empty")
     private String name;
 
     @JsonProperty("description")
@@ -34,7 +33,6 @@ public class Video {
     private String description;
 
     @JsonProperty("releaseTime")
-    @NotEmpty(message = "Video release time cannot be empty")
     private String releaseTime;
 
     @JsonProperty("user")

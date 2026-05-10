@@ -1,23 +1,26 @@
-G:\ProyectoIntegracion-AISS-2025_26\TwitchMiner\src\main\java\aiss_L3\TwitchMiner\config\RestTemplateConfig.java
-G:\ProyectoIntegracion-AISS-2025_26\TwitchMiner\src\main\java\aiss_L3\TwitchMiner\controller\ChannelController.java
-G:\ProyectoIntegracion-AISS-2025_26\TwitchMiner\src\main\java\aiss_L3\TwitchMiner\controller\VideoController.java
-G:\ProyectoIntegracion-AISS-2025_26\TwitchMiner\src\main\java\aiss_L3\TwitchMiner\etl\Transformer.java
-G:\ProyectoIntegracion-AISS-2025_26\TwitchMiner\src\main\java\aiss_L3\TwitchMiner\exception\GlobalExceptionHandler.java
-G:\ProyectoIntegracion-AISS-2025_26\TwitchMiner\src\main\java\aiss_L3\TwitchMiner\exception\ResourceNotFoundException.java
-G:\ProyectoIntegracion-AISS-2025_26\TwitchMiner\src\main\java\aiss_L3\TwitchMiner\exception\TwitchApiException.java
-G:\ProyectoIntegracion-AISS-2025_26\TwitchMiner\src\main\java\aiss_L3\TwitchMiner\model\twitch\TwitchSearchChannel.java
-G:\ProyectoIntegracion-AISS-2025_26\TwitchMiner\src\main\java\aiss_L3\TwitchMiner\model\twitch\TwitchSearchChannelResponse.java
-G:\ProyectoIntegracion-AISS-2025_26\TwitchMiner\src\main\java\aiss_L3\TwitchMiner\model\twitch\TwitchUser.java
-G:\ProyectoIntegracion-AISS-2025_26\TwitchMiner\src\main\java\aiss_L3\TwitchMiner\model\twitch\TwitchUserResponse.java
-G:\ProyectoIntegracion-AISS-2025_26\TwitchMiner\src\main\java\aiss_L3\TwitchMiner\model\twitch\TwitchVideo.java
-G:\ProyectoIntegracion-AISS-2025_26\TwitchMiner\src\main\java\aiss_L3\TwitchMiner\model\twitch\TwitchVideoResponse.java
-G:\ProyectoIntegracion-AISS-2025_26\TwitchMiner\src\main\java\aiss_L3\TwitchMiner\model\videominer\Caption.java
-G:\ProyectoIntegracion-AISS-2025_26\TwitchMiner\src\main\java\aiss_L3\TwitchMiner\model\videominer\Channel.java
-G:\ProyectoIntegracion-AISS-2025_26\TwitchMiner\src\main\java\aiss_L3\TwitchMiner\model\videominer\Comment.java
-G:\ProyectoIntegracion-AISS-2025_26\TwitchMiner\src\main\java\aiss_L3\TwitchMiner\model\videominer\User.java
-G:\ProyectoIntegracion-AISS-2025_26\TwitchMiner\src\main\java\aiss_L3\TwitchMiner\model\videominer\Video.java
-G:\ProyectoIntegracion-AISS-2025_26\TwitchMiner\src\main\java\aiss_L3\TwitchMiner\services\ChannelService.java
-G:\ProyectoIntegracion-AISS-2025_26\TwitchMiner\src\main\java\aiss_L3\TwitchMiner\services\TwitchClient.java
-G:\ProyectoIntegracion-AISS-2025_26\TwitchMiner\src\main\java\aiss_L3\TwitchMiner\services\TwitchUserService.java
-G:\ProyectoIntegracion-AISS-2025_26\TwitchMiner\src\main\java\aiss_L3\TwitchMiner\services\VideoService.java
-G:\ProyectoIntegracion-AISS-2025_26\TwitchMiner\src\main\java\aiss_L3\TwitchMiner\TwitchMinerApplication.java
+C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\Ws-Proyecto\Twitch-branch\TwitchMiner\src\main\java\aiss_L3\TwitchMiner\config\RestTemplateConfig.java
+C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\Ws-Proyecto\Twitch-branch\TwitchMiner\src\main\java\aiss_L3\TwitchMiner\controller\ChannelController.java
+C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\Ws-Proyecto\Twitch-branch\TwitchMiner\src\main\java\aiss_L3\TwitchMiner\controller\VideoController.java
+C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\Ws-Proyecto\Twitch-branch\TwitchMiner\src\main\java\aiss_L3\TwitchMiner\etl\Transformer.java
+C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\Ws-Proyecto\Twitch-branch\TwitchMiner\src\main\java\aiss_L3\TwitchMiner\exception\GlobalExceptionHandler.java
+C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\Ws-Proyecto\Twitch-branch\TwitchMiner\src\main\java\aiss_L3\TwitchMiner\exception\ResourceNotFoundException.java
+C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\Ws-Proyecto\Twitch-branch\TwitchMiner\src\main\java\aiss_L3\TwitchMiner\exception\TwitchApiException.java
+C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\Ws-Proyecto\Twitch-branch\TwitchMiner\src\main\java\aiss_L3\TwitchMiner\model\twitch\TwitchClip.java
+C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\Ws-Proyecto\Twitch-branch\TwitchMiner\src\main\java\aiss_L3\TwitchMiner\model\twitch\TwitchClipsResponse.java
+C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\Ws-Proyecto\Twitch-branch\TwitchMiner\src\main\java\aiss_L3\TwitchMiner\model\twitch\TwitchSearchChannel.java
+C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\Ws-Proyecto\Twitch-branch\TwitchMiner\src\main\java\aiss_L3\TwitchMiner\model\twitch\TwitchSearchChannelResponse.java
+C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\Ws-Proyecto\Twitch-branch\TwitchMiner\src\main\java\aiss_L3\TwitchMiner\model\twitch\TwitchUser.java
+C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\Ws-Proyecto\Twitch-branch\TwitchMiner\src\main\java\aiss_L3\TwitchMiner\model\twitch\TwitchUserResponse.java
+C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\Ws-Proyecto\Twitch-branch\TwitchMiner\src\main\java\aiss_L3\TwitchMiner\model\twitch\TwitchVideo.java
+C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\Ws-Proyecto\Twitch-branch\TwitchMiner\src\main\java\aiss_L3\TwitchMiner\model\twitch\TwitchVideoResponse.java
+C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\Ws-Proyecto\Twitch-branch\TwitchMiner\src\main\java\aiss_L3\TwitchMiner\model\videominer\Caption.java
+C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\Ws-Proyecto\Twitch-branch\TwitchMiner\src\main\java\aiss_L3\TwitchMiner\model\videominer\Channel.java
+C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\Ws-Proyecto\Twitch-branch\TwitchMiner\src\main\java\aiss_L3\TwitchMiner\model\videominer\Comment.java
+C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\Ws-Proyecto\Twitch-branch\TwitchMiner\src\main\java\aiss_L3\TwitchMiner\model\videominer\User.java
+C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\Ws-Proyecto\Twitch-branch\TwitchMiner\src\main\java\aiss_L3\TwitchMiner\model\videominer\Video.java
+C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\Ws-Proyecto\Twitch-branch\TwitchMiner\src\main\java\aiss_L3\TwitchMiner\services\ChannelService.java
+C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\Ws-Proyecto\Twitch-branch\TwitchMiner\src\main\java\aiss_L3\TwitchMiner\services\TwitchClient.java
+C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\Ws-Proyecto\Twitch-branch\TwitchMiner\src\main\java\aiss_L3\TwitchMiner\services\TwitchClipsService.java
+C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\Ws-Proyecto\Twitch-branch\TwitchMiner\src\main\java\aiss_L3\TwitchMiner\services\TwitchUserService.java
+C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\Ws-Proyecto\Twitch-branch\TwitchMiner\src\main\java\aiss_L3\TwitchMiner\services\VideoService.java
+C:\Users\Arve\Documents\Apuntes Uni\AISS-2º\Integración\Proyecto\Ws-Proyecto\Twitch-branch\TwitchMiner\src\main\java\aiss_L3\TwitchMiner\TwitchMinerApplication.java

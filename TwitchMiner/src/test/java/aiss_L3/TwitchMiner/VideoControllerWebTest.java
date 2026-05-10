@@ -1,0 +1,82 @@
+package aiss_L3.TwitchMiner;
+
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.web.servlet.MockMvc;
+
+import aiss_L3.TwitchMiner.controller.VideoController;
+import aiss_L3.TwitchMiner.model.videominer.Comment;
+import aiss_L3.TwitchMiner.model.videominer.Video;
+import aiss_L3.TwitchMiner.services.VideoService;
+
+@WebMvcTest(VideoController.class)
+class VideoControllerWebTest {
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @MockBean
+    private VideoService videoService;
+
+    private static Video sampleVideo(String id) {
+        Video video = new Video();
+        video.setId(id);
+        video.setName("Sample Video");
+        video.setDescription("Description");
+        video.setReleaseTime("2024-01-02T00:00:00Z");
+        video.setComments(new ArrayList<>(List.of(sampleComment("comment-1"))));
+        video.setCaptions(new ArrayList<>());
+        return video;
+    }
+
+    private static Comment sampleComment(String id) {
+        Comment comment = new Comment();
+        comment.setId(id);
+        comment.setText("[CLIP] Example clip\nhttps://example.com/clip");
+        comment.setCreatedOn("2024-01-03T00:00:00Z");
+        return comment;
+    }
+
+    @Test
+    void getVideos_usesDefaultQueryAndMaxResultsWhenMissingParams() throws Exception {
+        when(videoService.getVideos(null, 10)).thenReturn(List.of(sampleVideo("video-1")));
+
+        mockMvc.perform(get("/twitch/videos"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value("video-1"));
+
+        verify(videoService).getVideos(null, 10);
+    }
+
+    @Test
+    void getVideos_bindsParams() throws Exception {
+        when(videoService.getVideos("Twitch", 4)).thenReturn(List.of(sampleVideo("video-1")));
+
+        mockMvc.perform(get("/twitch/videos").queryParam("query", "Twitch").queryParam("maxResults", "4"))
+                .andExpect(status().isOk());
+
+        verify(videoService).getVideos("Twitch", 4);
+    }
+
+    @Test
+    void getVideoById_returnsVideo() throws Exception {
+        when(videoService.getVideoById("video-1")).thenReturn(sampleVideo("video-1"));
+
+        mockMvc.perform(get("/twitch/videos/{id}", "video-1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.comments[0].id").value("comment-1"));
+
+        verify(videoService).getVideoById("video-1");
+    }
+}

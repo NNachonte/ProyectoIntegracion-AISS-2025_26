@@ -27,12 +27,12 @@ public class Video {
     private User author;
 
     @JsonProperty("comments")
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "videoId")
     private List<Comment> comments;
 
     @JsonProperty("captions")
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "videoId")
     private List<Caption> captions;
 
