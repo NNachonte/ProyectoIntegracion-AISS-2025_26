@@ -25,9 +25,16 @@ public class ApiKeyFilter implements Filter {
         
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
+        
         String path = req.getRequestURI();
+        String referer = req.getHeader("Referer"); 
 
         if (path.contains("/swagger-ui") ||  path.contains("/h2-console") || path.contains("/v3/api-docs")) {
+            chain.doFilter(request, response);
+            return;
+        }
+
+        if (referer != null && referer.contains("/swagger-ui")) {
             chain.doFilter(request, response);
             return;
         }
@@ -37,7 +44,7 @@ public class ApiKeyFilter implements Filter {
         if (secretKey.equals(clientKey)) {
             chain.doFilter(request, response);
         } else {
-            res.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // Devuelve un error 401
+            res.setStatus(HttpServletResponse.SC_UNAUTHORIZED); 
             res.setContentType("application/json");
             res.getWriter().write("{\"error\": \"Acceso denegado. Falta la cabecera X-API-KEY o es incorrecta.\"}");
         }
